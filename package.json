@@ -1,0 +1,35 @@
+{
+  "name": "chatscript",
+  "version": "1.0.0",
+  "source": "src/index.html",
+  "scripts": {
+    "dev": "parcel src/index.html",
+    "build": "parcel build src/index.html",
+    "start": "node server.js"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.6.2",
+    "autoprefixer": "^10.4.7",
+    "handlebars": "^4.7.7",
+    "parcel": "^2.6.2",
+    "parcel-transformer-hbs": "^1.0.4"
+  },
+  "dependencies": {
+    "express": "^4.18.1"
+  },
+  "description": "Проект веб-мессенджера курса Яндекс.Практикум - Мидл Фронтенд Разработчик 2022",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/romatou/middle.messenger.praktikum.yandex.git"
+  },
+  "keywords": [
+    "messenger",
+    "chat"
+  ],
+  "author": "Roman Tukhvatullin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/romatou/middle.messenger.praktikum.yandex.git/bugs"
+  },
+  "homepage": "https://github.com/romatou/middle.messenger.praktikum.yandex.git#readme"
+}

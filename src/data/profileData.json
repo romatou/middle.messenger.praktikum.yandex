@@ -1,0 +1,27 @@
+{
+	"avatar": "https://avatars.mds.yandex.net/get-znatoki-cover/879490/2a0000017c761a5d72415da5350fbaea7d72/orig",
+	"email": {
+		"label": "Почта",
+		"text": "pupkin@yandex.ru"
+	},
+	"login": {
+		"label": "Логин",
+		"text": "VasilyPupkin"
+	},
+	"firstName": {
+		"label": "Имя",
+		"text": "Василий"
+	},
+	"lastName": {
+		"label": "Фамилия",
+		"text": "Пупкин"
+	},
+	"chatName": {
+		"label": "Имя в чате",
+		"text": "Василий П."
+	},
+	"phone": {
+		"label": "Телефон",
+		"text": "+7 (915) 223-34-12"
+	}
+}

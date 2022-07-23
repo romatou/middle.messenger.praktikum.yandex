@@ -1,0 +1,266 @@
+@import '../../mixins.scss';
+@import '../../vars.scss';
+
+.chats {
+	height: 100%;
+	width: 100%;
+
+	> .messages {
+		&:not(:last-child) {
+			margin-bottom: 2rem;
+		}
+
+		.link {
+			display: block;
+			position: static;
+			text-align: right;
+			margin-bottom: 1rem;
+			color: #fff;
+			text-decoration: none;
+			font-size: 14px;
+		}
+
+		input {
+			margin-bottom: 2rem;
+
+			&::placeholder {
+				color: grey;
+			}
+		}
+
+		.list {
+			a {
+				display: inline-block;
+				overflow: auto;
+				position: relative;
+
+				&:not(:last-child) {
+					margin-bottom: 1rem;
+				}
+
+				&:first-child::after {
+					content: '2';
+					display: flex;
+					justify-content: center;
+					position: absolute;
+					top: 0.5rem;
+					right: 0.5rem;
+					font-weight: bold;
+					align-items: center;
+					width: 1rem;
+					height: 1rem;
+					border-radius: 50%;
+					background-color: $linkColor;
+				}
+			}
+
+			.message {
+				@include borderStyle(2px, 8px);
+				display: flex;
+				align-items: center;
+				color: #fff;
+				padding: 4px 6px;
+				font-size: 12px;
+				min-height: 64px;
+
+				&.active {
+					background: #4f4545;
+					transition-duration: 0.1s;
+				}
+
+				.avatar {
+					@include borderStyle(2px, 50%);
+					width: 48px;
+					display: flex;
+					height: 48px;
+					flex-shrink: 0;
+					margin-right: 0.5rem;
+				}
+
+				.content {
+					padding: 6px 0;
+					display: flex;
+					align-self: flex-start;
+					flex-direction: column;
+					flex-grow: 1;
+					height: 100%;
+
+					.name {
+						margin-bottom: 0.5rem;
+						font-weight: bold;
+					}
+
+					.last-message {
+					}
+				}
+
+				.time {
+					align-self: end;
+				}
+			}
+		}
+	}
+
+	.chat {
+		color: #fff;
+		@include borderStyle(2px, 8px);
+		padding: 1rem;
+		display: flex;
+		flex-flow: column;
+		justify-content: center;
+		align-items: center;
+
+		.top-bar {
+			flex-grow: 0;
+			display: flex;
+			width: 100%;
+			justify-content: space-between;
+			margin-bottom: 4rem;
+
+			.user {
+				display: flex;
+				align-items: center;
+			}
+
+			.three-dots {
+				padding: 12px 0;
+				display: flex;
+				flex-flow: column;
+				justify-content: space-between;
+				align-items: center;
+
+				span {
+					@include borderStyle(2px, 50%);
+					width: 4px;
+					display: flex;
+					height: 4px;
+					flex-shrink: 0;
+					margin-right: 0.5rem;
+				}
+			}
+		}
+
+		.main-window {
+			flex-grow: 2;
+			width: 100%;
+			position: relative;
+			display: flex;
+			flex-direction: column;
+
+			.date {
+				display: block;
+				text-align: center;
+				margin-bottom: 0.5rem;
+			}
+
+			.messages {
+				position: relative;
+				width: 100%;
+
+				.message {
+					padding: 1rem;
+					width: auto;
+					background: #3d3d3d;
+					border-radius: 12px;
+					margin-bottom: 1rem;
+					position: relative;
+
+					p {
+						margin: 0;
+						font-size: 14px;
+					}
+
+					span {
+						text-align: right;
+						display: block;
+						margin-top: 1rem;
+						font-size: 10px;
+					}
+
+					&.message_contact {
+						width: 50%;
+					}
+
+					&.message_user {
+						width: 50%;
+						margin-left: auto;
+					}
+				}
+			}
+
+			.bottom-bar {
+				display: flex;
+				align-items: center;
+				height: auto;
+				position: absolute;
+				bottom: 0;
+				width: 100%;
+
+				span {
+					flex-grow: 0;
+				}
+
+				.entry-area {
+					flex-grow: 2;
+					border-radius: 8px;
+					height: 32px;
+					margin: 0;
+					margin-right: 0.5rem;
+					background: #000000;
+					border: $borderStyle;
+					resize: none;
+					color: #fff;
+					padding: 4px 6px;
+					font-size: 14px;
+
+					&:focus {
+						outline: none;
+					}
+				}
+
+				.send {
+					flex-grow: 0;
+					width: 32px;
+					height: 32px;
+					display: block;
+					margin: 0;
+				}
+			}
+		}
+
+		.avatar {
+			@include borderStyle(2px, 50%);
+			width: 48px;
+			display: flex;
+			height: 48px;
+			flex-shrink: 0;
+			margin-right: 1rem;
+		}
+	}
+
+	@media screen and (min-width: 800px) {
+		display: flex;
+
+		> .messages {
+			width: 25%;
+			margin-right: 2rem;
+			min-width: 240px;
+
+			&:not(:last-child) {
+				margin-bottom: 0;
+			}
+
+			.list {
+				a {
+					&:not(:last-child) {
+						margin-bottom: 1rem;
+					}
+				}
+			}
+		}
+
+		.chat {
+			width: 75%;
+		}
+	}
+}

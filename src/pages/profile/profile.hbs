@@ -1,0 +1,17 @@
+<div class='profile-sidebar'>
+	<a href='/chats'>К чатам</a>
+</div>
+<div class='window {{container}}'>
+	<div class='avatar'>
+		<img src='{{profileAvatar}}' alt='{{data.name}}' /></div>
+	<div class='name'>{{profileData.firstName.text}}</div>
+	<dl class='list'>
+		{{#each profileData}}
+			<dt class='label'>{{label}}</dt>
+			<dd class='text'>{{text}}</dd>
+		{{/each}}
+	</dl>
+	<a href=''>Изменить данные</a>
+	<a href='/change-password'>Изменить пароль</a>
+	<a href='/'>Выйти</a>
+</div>
