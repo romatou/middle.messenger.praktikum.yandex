@@ -1,0 +1,11 @@
+# IDE config
+/.nova
+
+# OS files
+.DS_Store
+
+/dist
+/node_modules
+
+# Package files and folders
+/.parcel-cache
