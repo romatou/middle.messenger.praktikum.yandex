@@ -89,12 +89,9 @@
 						margin-bottom: 0.5rem;
 						font-weight: bold;
 					}
-
-					.last-message {
-					}
 				}
 
-				.time {
+				time {
 					align-self: end;
 				}
 			}
@@ -212,10 +209,6 @@
 					color: #fff;
 					padding: 4px 6px;
 					font-size: 14px;
-
-					&:focus {
-						outline: none;
-					}
 				}
 
 				.send {

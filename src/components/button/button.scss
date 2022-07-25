@@ -1,9 +1,11 @@
+@import '../../vars.scss';
+
 button,
 .btn {
 	margin-top: 1rem;
 	height: 2rem;
 	border-radius: 8px;
-	background-color: #b3b3b3;
+	background-color: $btnColor;
 	outline: none;
 	font-family: 'Roboto';
 	border: none;
@@ -17,11 +19,11 @@ button,
 	align-items: center;
 	justify-content: center;
 	font-weight: 300;
-	color: #363636;
+	color: $textColorDark;
 	opacity: 0.9;
 
 	&:hover {
 		opacity: 1;
-		background-color: #eee;
+		background-color: $bgColorHover;
 	}
 }
