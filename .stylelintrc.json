@@ -1,8 +1,0 @@
-{
-  "extends": ["stylelint-config-prettier"],
-  "rules": {
-    "color-hex-case": "lower"
-  },
-  "ignoreFiles": ["dist/*", "node_modules/*"],
-  "plugins": ["stylelint-scss"]
-}

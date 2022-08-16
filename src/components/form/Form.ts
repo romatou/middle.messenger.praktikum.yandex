@@ -1,9 +1,9 @@
 import Block from '../../core/Block'
 import template from './template.hbs'
 
-type FormProps = {
-  fields: object[]
-  button: object
+interface FormProps {
+  fields: HTMLElement[]
+  button: HTMLElement
   events?: {
     focus?: (e: Event) => void
     blur?: (e: Event) => void

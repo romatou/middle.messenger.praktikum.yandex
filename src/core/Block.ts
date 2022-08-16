@@ -1,7 +1,7 @@
-import EventBus from './EventBus'
-import {v4} from 'uuid'
+import EventBus from './EventBus.ts'
+import { v4 } from 'uuid'
 
-class Block<Props extends {}> {
+abstract class Block<Props> {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -9,23 +9,16 @@ class Block<Props extends {}> {
     FLOW_RENDER: 'flow:render',
   }
 
-  private _element: HTMLElement | null = null
-  public eventBus: Function = EventBus
-  private _meta: Record<any, any>
-  private _id: string
-  public children: {}
-  public withInternalID: boolean = false
-  protected props: Record<string, any>
+  private _element: Nullable<HTMLElement> = null
+  public eventBus: () => void = EventBus
+  private readonly _meta: Record<string, Props>
+  private readonly _id: string
+  public children: Props
+  public withInternalID = false
+  protected props: Record<string, string | object>
 
-  /** JSDoc
-   * @param {string} tagName
-   * @param {Object} props
-   *
-   * @returns {void}
-   */
-
-  constructor(tagName: string = 'div', propsAndChildren = {}) {
-    const {children, props} = this._getChildren(propsAndChildren)
+  constructor(tagName = 'div', propsAndChildren: Props) {
+    const { children, props } = this._getChildren(propsAndChildren)
     this.children = children
 
     const eventBus = new EventBus()
@@ -37,7 +30,7 @@ class Block<Props extends {}> {
       props,
     }
 
-    this.props = this._makePropsProxy({...props, _id: this._id})
+    this.props = this._makePropsProxy({ ...props, _id: this._id })
 
     this.eventBus = () => eventBus
 
@@ -45,16 +38,16 @@ class Block<Props extends {}> {
     eventBus.emit(Block.EVENTS.INIT)
   }
 
-  private _getChildren(propsAndChildren) {
-    const children: any = {}
-    const props: any = {}
+  private _getChildren(propsAndChildren: Record<string, Props | string>) {
+    const children = {}
+    const props = {}
 
     Object.entries(propsAndChildren).forEach(([key, value]) => {
       if (value instanceof Block) {
         children[key] = value
       } else if (
         Array.isArray(value) &&
-        value.every((value) => value instanceof Block)
+        value.every(value => value instanceof Block)
       ) {
         children[key] = value
       } else {
@@ -62,75 +55,62 @@ class Block<Props extends {}> {
       }
     })
 
-    return {children, props}
+    return { children, props }
   }
 
-  private _registerEvents(eventBus) {
+  private _registerEvents(eventBus): void {
     eventBus.on(Block.EVENTS.INIT, this.init.bind(this))
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this))
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this))
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this))
   }
 
-  private _createResources() {
-    const {tagName} = this._meta
-    this._element! = this._createDocumentElement(tagName)
+  private _createResources(): void {
+    const { tagName } = this._meta
+    this._element = this._createDocumentElement(tagName)
   }
 
-  init() {
+  public init(): void {
     this._createResources()
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER)
   }
 
-  private _componentDidMount() {
+  private _componentDidMount(): boolean {
     return this.componentDidMount()
-
-    Object.values(this.children).forEach((child) => {
+    Object.values(this.children).forEach(child => {
       child.dispatchComponentDidMount()
     })
   }
 
-  componentDidMount() {
+  public componentDidMount(): boolean {
     return true
   }
 
-  dispatchComponentDidMount() {
+  public dispatchComponentDidMount(): void {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM)
   }
 
-  private _componentDidUpdate(oldProps: any, newProps: any) {
-    const response = this.componentDidUpdate(oldProps, newProps)
-
-    if (!response) {
-      return
-    }
-
+  private _componentDidUpdate(oldProps: Props, newProps: Props): void {
     this._render()
   }
 
-  componentDidUpdte(oldPorps: any, newProps: any) {
-    this.children.button.setProps(newProps.button.props)
-    this.children.button = newProps.image
-    return true
-  }
-
   protected addEvents(): void {
-    const {events = {}} = this.props
+    const { events = {} } = this.props
 
-    Object.keys(events).forEach((eventName) => {
-      this._element!!.addEventListener(eventName, events[eventName])
+    Object.keys(events).forEach(eventName => {
+      this._element.addEventListener(eventName, events[eventName])
     })
   }
 
   protected removeEvents(): void {
-    const {events = {}} = this.props
+    const { events = {} } = this.props
 
-    Object.keys(events).forEach((eventName) => {
-      this._element!!.removeEventListener(eventName, events[eventName])
+    Object.keys(events).forEach(eventName => {
+      this._element.removeEventListener(eventName, events[eventName])
     })
   }
 
-  setProps = (nextProps: any) => {
+  public setProps = (nextProps: Props): null => {
     if (!nextProps) {
       return
     }
@@ -139,27 +119,27 @@ class Block<Props extends {}> {
   }
 
   get element(): HTMLElement | null {
-    return this._element!
+    return this._element
   }
 
-  private _render() {
-    const block = this.render()
+  private _render(): HTMLElement {
+    const block: HTMLElement = this.render()
 
     this.removeEvents()
-    this._element!.innerHTML = ''
+    this._element.innerHTML = ''
 
-    this._element!.append(block)
+    this._element.append(block)
 
     this.addEvents()
   }
 
-  public render()
+  protected render()
 
-  public getContent(): HTMLElement | null {
+  protected getContent(): HTMLElement | null {
     return this.element
   }
 
-  private _makePropsProxy(props: any) {
+  private _makePropsProxy(props: Props) {
     const self = this
 
     return new Proxy(props as unknown as object, {
@@ -172,7 +152,7 @@ class Block<Props extends {}> {
         return typeof value === 'function' ? value.bind(target) : value
       },
       set(target: Record<string, unknown>, prop: string, value: unknown) {
-        const oldValue = {...target}
+        const oldValue = { ...target }
         target[prop] = value
         self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldValue, target)
         return true
@@ -183,15 +163,14 @@ class Block<Props extends {}> {
     })
   }
 
-  private _createDocumentElement(tagName): HTMLElement {
+  private _createDocumentElement(tagName: string): HTMLElement {
     const element: HTMLElement = document.createElement(tagName)
     element.setAttribute('data-id', this._id)
     return element
   }
 
-  compile(template: (props?: any) => string, props): DocumentFragment {
-    const propsAndStubs = {...props}
-
+  compile(template: string, props: unknown): DocumentFragment {
+    const propsAndStubs = { ...props }
     Object.entries(this.children).forEach(([key, child]) => {
       if (Array.isArray(child)) {
         propsAndStubs[key] = []
@@ -203,21 +182,23 @@ class Block<Props extends {}> {
       }
     })
 
-    const fragment = this._createDocumentElement('template')
+    const fragment: HTMLElement = this._createDocumentElement('template')
 
     fragment.innerHTML = template(propsAndStubs)
-    Object.values(this.children).forEach((child) => {
+    Object.values(this.children).forEach((child: HTMLElement) => {
       if (Array.isArray(child)) {
         for (let i = 0; i < child.length; i++) {
-          const stub = fragment.content.querySelector(
-            `[data-id="${child[i]._id}"]`,
+          const stub: HTMLElement = fragment.content.querySelector(
+            `[data-id="${child[i]._id}"]`
           )
           if (stub) {
             stub.replaceWith(child[i].getContent())
           }
         }
       } else {
-        const stub = fragment.content.querySelector(`[data-id="${child._id}"]`)
+        const stub: HTMLElement = fragment.content.querySelector(
+          `[data-id="${child._id}"]`
+        )
 
         if (stub) {
           stub.replaceWith(child.getContent())

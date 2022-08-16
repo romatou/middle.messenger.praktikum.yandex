@@ -5,13 +5,14 @@
     "declaration": false,
     "module": "commonjs",
     "strictNullChecks": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "baseUrl": "./src",
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "strict": true
   },
-  "noImplicitAny": true,
-  "noUnusedLocals": true,
-  "noUnusedParameters": true,
-  "sourceMap": true,
-  "strictNullChecks": true,
-  "strict": false,
   "exclude": ["dist", "node_modules"]
 }

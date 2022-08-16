@@ -2,7 +2,7 @@ import Block from '../../core/Block'
 import template from './template.hbs'
 import './Button.scss'
 
-type ButtonProps = {
+interface IButton {
   label: string
   inputType: string
   events?: {
@@ -11,15 +11,15 @@ type ButtonProps = {
   }
 }
 
-export default class Button extends Block<ButtonProps> {
-  constructor(props: ButtonProps) {
+export default class Button extends Block<IButton> {
+  constructor (props: IButton) {
     super('div', props)
   }
 
-  render() {
+  render (): HTMLElement {
     return this.compile(template, {
       label: this.props.label,
-      inputType: this.props.type,
+      inputType: this.props.type
     })
   }
 }

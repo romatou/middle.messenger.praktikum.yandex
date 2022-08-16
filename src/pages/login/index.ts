@@ -2,7 +2,6 @@ import Login from './Login'
 import Button from '../../components/button/Button'
 import Form from '../../components/form/Form'
 import Input from '../../components/input/Input'
-import renderDOM from '../../core/renderDOM'
 import { inputValidator, submitValidator } from '../../utils/validation'
 
 import './style.scss'
@@ -15,14 +14,14 @@ export const pageLogin = new Login({
         name: 'login',
         label: 'Логин',
         inputType: 'text',
-        placeholder: 'Введите логин',
+        placeholder: 'Введите логин'
       }),
       new Input({
         name: 'password',
         label: 'Пароль',
         inputType: 'text',
-        placeholder: 'Введите пароль',
-      }),
+        placeholder: 'Введите пароль'
+      })
     ],
     events: {
       focus: (e: Event) => {
@@ -30,26 +29,19 @@ export const pageLogin = new Login({
       },
       blur: (e: Event) => {
         inputValidator(e)
-      },
+      }
     },
     button: new Button({
       label: 'Войти',
       inputType: 'submit',
       events: {
         click: (e: Event) => {
-          if ((e.target as HTMLElement).tagName == 'BUTTON') {
-            e.preventDefault()
+          if ((e.target as HTMLButtonElement).tagName === 'BUTTON') {
             submitValidator(e)
-            const fields = document.querySelectorAll('input')
-            const data = {}
-            fields.forEach(cur => {
-              data[cur.name] = cur.value
-            }),
-              console.log(data)
           }
-        },
-      },
-    }),
+        }
+      }
+    })
   }),
-  link: 'Зарегистрироваться',
+  link: 'Зарегистрироваться'
 })

@@ -1,22 +1,22 @@
 import Block from '../../core/Block'
 import template from './template.hbs'
 
-type LoginProps = {
+interface LoginProps {
   title: string
   form: object
   link: string
 }
 
 export default class Login extends Block<LoginProps> {
-  constructor(props: LoginProps) {
+  constructor (props: LoginProps) {
     super('section', props)
   }
 
-  render() {
+  render () {
     return this.compile(template, {
       title: this.props.title,
       form: this.props.form,
-      link: this.props.link,
+      link: this.props.link
     })
   }
 }

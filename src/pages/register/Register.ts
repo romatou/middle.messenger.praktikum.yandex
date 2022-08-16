@@ -1,10 +1,8 @@
 import './style.scss'
 import Block from '../../core/Block'
 import template from './template.hbs'
-import Button from '../../components/button/Button'
-import Input from '../../components/input/Input'
 
-type PageProps = {
+interface IPage {
   title: string
   form: object
   link: string
@@ -14,16 +12,16 @@ type PageProps = {
   }
 }
 
-export default class Register extends Block<PageProps> {
-  constructor(props: PageProps) {
+export default class Register extends Block<IPage> {
+  constructor (props: IPage) {
     super('section', props)
   }
 
-  render() {
+  render (): HTMLElement {
     return this.compile(template, {
       title: this.props.title,
       form: this.props.form,
-      link: this.props.link,
+      link: this.props.link
     })
   }
 }

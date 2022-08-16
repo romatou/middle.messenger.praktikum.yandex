@@ -14,28 +14,28 @@ document.addEventListener('DOMContentLoaded', () => {
   window.onload = function () {
     renderDOM('.app', pageLogin)
     switch (window.location.pathname) {
-      case '/':
-        renderDOM('.app', pageLogin)
-        break
-      case '/register':
-        renderDOM('.app', pageRegister)
-        break
-      case '/chats':
-        renderDOM('.app', pageChats)
-        break
-      case '/profile':
-        renderDOM('.app', pageProfile)
-        break
-      case '/change-password':
-        renderDOM('.app', pageChangePass)
-        break
-      case '/500':
-        renderDOM('.app', pageServerError)
-        break
-      case '/404':
-      default:
-        renderDOM('.app', pageNotFound)
-        break
+    case '/':
+      renderDOM('.app', pageLogin)
+      break
+    case '/register':
+      renderDOM('.app', pageRegister)
+      break
+    case '/chats':
+      renderDOM('.app', pageChats)
+      break
+    case '/profile':
+      renderDOM('.app', pageProfile)
+      break
+    case '/change-password':
+      renderDOM('.app', pageChangePass)
+      break
+    case '/500':
+      renderDOM('.app', pageServerError)
+      break
+    case '/404':
+    default:
+      renderDOM('.app', pageNotFound)
+      break
     }
   }
 })

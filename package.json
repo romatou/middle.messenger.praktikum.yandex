@@ -6,23 +6,20 @@
     "dev": "parcel src/index.html",
     "build": "parcel build src/index.html",
     "start": "npm run build && node server.js",
-    "lint": "tsc --noEmit && eslint ./src/**/*.ts && npx stylelint ./src/**/*.scss",
-    "lint:fix": "tsc --noEmit && eslint --fix ./src/**/*.ts && npx stylelint ./src/**/*.scss --fix"
+    "lint": "npx eslint src/**/*.ts",
+    "lint:fix": "npx eslint --fix ./src/**/*.ts"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "2.6.2",
-    "@typescript-eslint/eslint-plugin": "5.31.0",
+    "@typescript-eslint/eslint-plugin": "5.33.1",
     "@typescript-eslint/parser": "5.31.0",
     "autoprefixer": "10.4.7",
-    "eslint": "8.21.0",
-    "eslint-config-google": "0.14.0",
-    "eslint-config-stylelint": "15.1.0",
+    "eslint": "8.22.0",
+    "eslint-config-standard-with-typescript": "22.0.0",
     "handlebars": "4.7.7",
     "parcel": "2.6.2",
     "parcel-transformer-hbs": "1.0.4",
-    "stylelint": "14.9.1",
-    "stylelint-config-prettier": "9.0.3",
-    "stylelint-scss": "4.3.0",
+    "typescript": "4.7.4",
     "uuid": "8.3.2"
   },
   "dependencies": {

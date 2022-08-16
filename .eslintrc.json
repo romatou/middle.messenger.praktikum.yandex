@@ -1,9 +1,10 @@
 {
   "env": {
     "browser": true,
-    "es2021": true
+    "es2021": true,
+    "node": true
   },
-  "extends": ["google"],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",
@@ -11,11 +12,17 @@
   },
   "plugins": ["@typescript-eslint"],
   "rules": {
+    "space-before-function-paren": 0,
+    "@typescript-eslint/no-var-requires": 0,
+    "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/no-this-alias": 0,
+    "no-console": "off",
     "semi": ["error", "never"],
     "indent": ["error", 2],
     "no-unused-vars": 2,
     "max-len": [1, 100],
     "max-params": [2, 3],
-    "@typescript-eslint/no-unused-vars": 2
+    "@typescript-eslint/no-unused-vars": "off",
+    "no-unused-vars": "off"
   }
 }

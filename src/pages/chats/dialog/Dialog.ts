@@ -2,7 +2,7 @@ import Block from '../../../core/Block'
 import template from './template.hbs'
 import './Dialog.scss'
 
-type PageProps = {
+interface PageProps {
   avatar: object
   messages: object
   form: object
@@ -12,15 +12,15 @@ type PageProps = {
 }
 
 export default class Dialog extends Block<PageProps> {
-  constructor(props: PageProps) {
+  constructor (props: PageProps) {
     super('section', props)
   }
 
-  render() {
+  render () {
     return this.compile(template, {
       avatar: this.props.avatar,
       messages: this.props.messages,
-      form: this.props.form,
+      form: this.props.form
     })
   }
 }

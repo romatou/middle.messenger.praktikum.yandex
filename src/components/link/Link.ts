@@ -2,7 +2,7 @@ import Block from '../../core/Block'
 import template from './link.hbs'
 import './Link.css'
 
-type LinkProps = {
+interface LinkProps {
   url?: string
   text: string
   events?: {
@@ -11,10 +11,10 @@ type LinkProps = {
 }
 
 export default class Link extends Block<LinkProps> {
-  render() {
+  render () {
     return this.compile(template, {
       url: this.props.url,
-      text: this.props.text,
+      text: this.props.text
     })
   }
 }

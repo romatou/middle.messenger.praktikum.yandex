@@ -2,7 +2,7 @@ import template from './template.hbs'
 import Block from '../../core/Block'
 import './Input.scss'
 
-type InputProps = {
+interface IInput {
   name: string
   label?: string
   placeholder?: string
@@ -13,17 +13,17 @@ type InputProps = {
   }
 }
 
-export default class Input extends Block<InputProps> {
-  constructor(props: InputProps) {
+export default class Input extends Block<IInput> {
+  constructor (props: IInput) {
     super('div', props)
   }
 
-  render() {
+  render (): HTMLElement {
     return this.compile(template, {
       label: this.props.label,
       name: this.props.name,
       placeholder: this.props.placeholder,
-      inputType: this.props.type,
+      inputType: this.props.type
     })
   }
 }

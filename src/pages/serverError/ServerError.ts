@@ -1,7 +1,7 @@
 import Block from '../../core/Block'
 import template from './template.hbs'
 
-type PageProps = {
+interface PageProps {
   title: string
   paragraph: string
   link: string
@@ -9,11 +9,11 @@ type PageProps = {
 }
 
 export default class ServerError extends Block<PageProps> {
-  constructor(props: PageProps) {
+  constructor (props: PageProps) {
     super('section', props)
   }
 
-  render() {
+  render () {
     return template(this.props)
   }
 }

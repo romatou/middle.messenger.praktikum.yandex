@@ -2,9 +2,9 @@ import Block from '../../../core/Block'
 import template from './template.hbs'
 import './Messages.scss'
 
-type PageProps = {
+interface PageProps {
   search: object
-  messages: object
+  messages?: object
   events: {
     submit?: (e: Event) => void
     click?: (e: Event) => void
@@ -12,15 +12,15 @@ type PageProps = {
 }
 
 export default class Messages extends Block<PageProps> {
-  constructor(props: PageProps) {
+  constructor (props: PageProps) {
     super('section', props)
   }
 
-  render() {
+  render () {
     return this.compile(template, {
       search: this.props.search,
       messages: this.props.messages,
-      form: this.props.form,
+      form: this.props.form
     })
   }
 }

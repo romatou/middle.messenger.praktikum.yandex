@@ -1,9 +1,7 @@
 import Block from '../../core/Block'
 import template from './template.hbs'
-import Button from '../../components/button/Button'
-import data from '../../data/profileData.json'
 
-type PageProps = {
+interface PageProps {
   link: string
   avatar: object
   form: object
@@ -12,15 +10,15 @@ type PageProps = {
   }
 }
 export default class Profile extends Block<PageProps> {
-  constructor(props: PageProps) {
+  constructor (props: PageProps) {
     super('section', props)
   }
 
-  render() {
+  render (): HTMLElement {
     return this.compile(template, {
-      link: this.props.return_link,
+      link: this.props.link,
       avatar: this.props.avatar,
-      form: this.props.form,
+      form: this.props.form
     })
   }
 }

@@ -1,9 +1,8 @@
 import Block from '../../core/Block'
 import template from './template.hbs'
 import Button from '../../components/button/Button'
-import data from '../../data/profileData.json'
 
-type PageProps = {
+interface PageProps {
   avatar: object
   form: object
   events?: {
@@ -11,14 +10,14 @@ type PageProps = {
   }
 }
 export default class ChangePass extends Block<PageProps> {
-  constructor(props: PageProps) {
+  constructor (props: PageProps) {
     super('section', props)
   }
 
-  render() {
+  render () {
     return this.compile(template, {
       avatar: this.props.avatar,
-      form: this.props.form,
+      form: this.props.form
     })
   }
 }

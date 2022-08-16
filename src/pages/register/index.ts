@@ -14,8 +14,8 @@ export const pageRegister = new Register({
       fields.forEach(cur => {
         data[cur.name] = cur.value
       }),
-        console.log(data)
-    },
+      console.log(data)
+    }
   },
   form: new Form({
     fields: [
@@ -23,44 +23,44 @@ export const pageRegister = new Register({
         name: 'email',
         label: 'Почтовый адрес',
         inputType: 'email',
-        placeholder: 'Введите адрес электронной почты',
+        placeholder: 'Введите адрес электронной почты'
       }),
       new Input({
         name: 'first_name',
         label: 'Имя',
         inputType: 'text',
-        placeholder: 'Введите имя',
+        placeholder: 'Введите имя'
       }),
       new Input({
         name: 'second_name',
         label: 'Фамилия',
         inputType: 'text',
-        placeholder: 'Введите фамилию',
+        placeholder: 'Введите фамилию'
       }),
       new Input({
         name: 'login',
         label: 'Логин',
         inputType: 'text',
-        placeholder: 'Введите логин',
+        placeholder: 'Введите логин'
       }),
       new Input({
         name: 'phone',
         label: 'Телефон',
         inputType: 'tel',
-        placeholder: 'Введите номер мобильного телефона',
+        placeholder: 'Введите номер мобильного телефона'
       }),
       new Input({
         name: 'password',
         label: 'Пароль',
         inputType: 'text',
-        placeholder: 'Введите пароль',
+        placeholder: 'Введите пароль'
       }),
       new Input({
         name: 'password_confirmation',
         label: 'Пароль еще раз',
         inputType: 'text',
-        placeholder: 'Еще раз пароль',
-      }),
+        placeholder: 'Еще раз пароль'
+      })
     ],
     events: {
       focus: e => {
@@ -68,7 +68,7 @@ export const pageRegister = new Register({
       },
       blur: e => {
         inputValidator(e)
-      },
+      }
     },
     button: new Button({
       label: 'Зарегистрироваться',
@@ -78,16 +78,10 @@ export const pageRegister = new Register({
           if ((e.target as HTMLElement).tagName == 'BUTTON') {
             e.preventDefault()
             submitValidator(e)
-            const fields = document.querySelectorAll('input')
-            const data = {}
-            fields.forEach(cur => {
-              data[cur.name] = cur.value
-            }),
-              console.log(data)
           }
-        },
-      },
-    }),
+        }
+      }
+    })
   }),
-  link: 'Зарегистрироваться',
+  link: 'Зарегистрироваться'
 })

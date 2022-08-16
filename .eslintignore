@@ -1,3 +1,12 @@
 /dist
 **/*.min.js
 /node_modules
+/.github
+/.cache
+/.idea
+/.parcel-cache
+
+**/*.min.js
+**/*.hbs
+**/*.scss
+**/*.html
