@@ -1,0 +1,52 @@
+@import '../../scss/vars';
+
+.label {
+  font-weight: bold;
+  display: block;
+  color: $textColorLight;
+  margin-bottom: 0.25rem;
+}
+
+.input {
+  appearance: none;
+  display: block;
+  width: 100%;
+  color: $textColorDark;
+  border: 1px solid $borderLight;
+  line-height: 1.25;
+  background-color: $bgColorLight;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.25rem;
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  width: 100%;
+  background: $bgColorLight;
+  border: 1px solid $borderLight;
+  padding: 0 8px;
+  height: 2rem;
+  border-radius: 8px;
+  font-size: 14px;
+  width: 100%;
+  margin-bottom: 1rem;
+
+  &::placeholder {
+    color: $textColorGrey;
+  }
+
+  &:focus {
+    outline: none;
+    border: 1px solid $borderLight;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    background-clip: padding-box;
+  }
+}
+
+.tooltip {
+  padding: 5px;
+  color: $bgColorLight;
+  font-size: 12px;
+  position: absolute;
+  margin: auto;
+  width: 200px;
+  word-break: break-word;
+  transform: translate(100%, -130%);
+}

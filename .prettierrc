@@ -1,0 +1,14 @@
+{
+  "trailingComma": "es5",
+  "semi": false,
+  "singleQuote": true,
+  "endOfLine": "lf",
+  "overrides": [
+    {
+      "files": ["**/*.css", "**/*.scss", "**/*.html", "**/*.hbs"],
+      "options": { "singleQuote": false }
+    }
+  ],
+  "tabWidth": 2,
+  "arrowParens": "avoid"
+}

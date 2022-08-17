@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "target": "es2017",
+    "declaration": false,
+    "module": "commonjs",
+    "strictNullChecks": true,
+    "sourceMap": true,
+    "baseUrl": "./src",
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "strict": true
+  },
+  "exclude": ["dist", "node_modules"]
+}

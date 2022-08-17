@@ -1,0 +1,22 @@
+@import "../../scss/vars";
+
+.server-error {
+  .page__title {
+    color: $textColorGrey;
+    text-align: center;
+    font-size: 3rem;
+    margin: 0;
+  }
+
+  .page__paragraph {
+    color: $textColorGrey;
+    margin: 1rem 0;
+  }
+
+  .page__link {
+    color: $linkColor;
+    text-decoration: none;
+    text-align: center;
+    display: block;
+  }
+}
