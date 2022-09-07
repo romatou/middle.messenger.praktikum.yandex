@@ -1,5 +1,5 @@
-import isEqual from '../../utils/isEqual'
-import renderDOM from '../routes/renderDOM'
+import isEqualStringify from '../utils/isEqualStringify'
+import renderDOM from '../modules/renderDOM'
 
 export default class Route {
   constructor(pathname, view, props) {
@@ -18,21 +18,17 @@ export default class Route {
 
   leave() {
     if (this._block) {
-      this._block.hide()
+      this._block.remove()
     }
   }
 
   match(pathname) {
-    return isEqual(pathname, this._pathname)
+    return isEqualStringify(pathname, this._pathname)
   }
 
   render() {
-    if (!this._block) {
-      this._block = new this._blockClass()
-      renderDOM(this._props.rootQuery, this._block)
-      return
-    }
-
-    this._block.show()
+    this._block = this._blockClass
+    renderDOM(this._props.rootQuery, this._block)
+    return
   }
 }

@@ -1,4 +1,6 @@
-export default class Router {
+import Route from './Route'
+
+class Router {
   constructor(rootQuery) {
     if (Router.__instance) {
       return Router.__instance
@@ -20,7 +22,7 @@ export default class Router {
 
   start() {
     window.onpopstate = event => {
-      this._onRoute(event.currentTarget.location.pathname)
+      this._onRoute(event.currentTarget?.location.pathname)
     }
 
     this._onRoute(window.location.pathname)
@@ -59,3 +61,5 @@ export default class Router {
     return this.routes.find(route => route.match(pathname))
   }
 }
+
+export default new Router('.app')
