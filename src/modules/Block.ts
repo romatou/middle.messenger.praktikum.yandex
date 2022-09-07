@@ -1,7 +1,7 @@
 import EventBus from './EventBus.ts'
 import { v4 } from 'uuid'
 
-abstract class Block<Props> {
+abstract class Block<Props extends {}> {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -110,7 +110,7 @@ abstract class Block<Props> {
     })
   }
 
-  public setProps = (nextProps: Props): null => {
+  public setProps = (nextProps: Props): null | undefined => {
     if (!nextProps) {
       return
     }
@@ -207,6 +207,10 @@ abstract class Block<Props> {
     })
 
     return fragment.content
+  }
+
+  remove() {
+    this._element.remove()
   }
 }
 
