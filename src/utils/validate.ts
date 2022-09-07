@@ -1,6 +1,6 @@
 import REGEXP from '../consts/REGEXP'
 
-const inputValidator = (e: Event): void => {
+const validateInput = (e: Event): void => {
   const item: HTMLInputElement = e.target
   const expression: object = REGEXP[item.name].expression
   const check: boolean = expression.test(item.value)
@@ -31,26 +31,29 @@ const inputValidator = (e: Event): void => {
   }
 }
 
-const submitValidator = (e: Event): void => {
+const validateSubmit = (e: Event): boolean | undefined => {
   e.preventDefault()
+
+  let isValid = false
+
   const inputs = document.querySelectorAll('input')
-  const userData = {}
+  const userData: object = {}
   try {
     inputs.forEach(input => {
       if (input.name !== 'search') {
         if (!REGEXP[input.name].expression.test(input.value)) {
-          const field: string = input.placeholder
+          throw {
+            field: input.placeholder,
+          }
+        } else {
+          isValid = true
+          userData[input.name] = input.value
         }
-      } else {
-        const inputName = input.name
-        userData[inputName] = input.value
       }
     })
-    inputs.forEach(input => {
-      input.value = ''
-    })
-    console.log(userData)
-  } catch (field: string) {
+
+    return isValid
+  } catch ({ field }) {
     alert(`В поле ${field} данные указаны некорректно`)
   }
 }
@@ -64,4 +67,4 @@ const addTooltip = (message: string): HTMLElement => {
   return tooltip
 }
 
-export { inputValidator, submitValidator }
+export { validateInput, validateSubmit }
