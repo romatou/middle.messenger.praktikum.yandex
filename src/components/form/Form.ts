@@ -1,13 +1,13 @@
-import Block from '../../core/Block'
+import Block from '../../modules/Block'
 import template from './template.hbs'
 
 interface FormProps {
-  fields: HTMLElement[]
-  button: HTMLElement
+  fields: unknown
+  button: unknown
   events?: {
-    focus?: (e: Event) => void
-    blur?: (e: Event) => void
-    submit?: (e: Event) => void
+    focus: (e: Event) => void
+    blur: (e: Event) => void
+    submit: (e: Event) => void
   }
 }
 
@@ -16,14 +16,18 @@ export default class Form extends Block<FormProps> {
     super('div', props)
   }
 
-  addEvents() {
+  addEvents(): void {
     const { events = {} } = this.props
-    const inputs = this.element!.querySelectorAll('input')
+    const inputs = this.element.querySelectorAll('input')
 
     inputs.forEach(item => {
       Object.keys(events).forEach(eventName => {
         item.addEventListener(eventName, events[eventName])
       })
+    })
+
+    Object.keys(events).forEach(eventName => {
+      this._element.addEventListener(eventName, events[eventName])
     })
   }
 
@@ -35,6 +39,10 @@ export default class Form extends Block<FormProps> {
       Object.keys(events).forEach(eventName => {
         item.removeEventListener(eventName, events[eventName])
       })
+    })
+
+    Object.keys(events).forEach(eventName => {
+      this._element.addEventListener(eventName, events[eventName])
     })
   }
 

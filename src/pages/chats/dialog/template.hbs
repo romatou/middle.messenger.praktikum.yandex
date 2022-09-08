@@ -1,24 +1,23 @@
-<div class='dialog dialog_active'>
+<div id="{{id}}" class='dialog dialog_active'>
   <header class='dialog__header'>
-    <div class='dialog__user'>
-      {{{avatar}}}
-      <span>Имя Фамилия</span>
+    <div class='dialog__title'>
+      <h2 class="title">{{title}}</h2>
     </div>
     <div class='dialog__menu'>
-      <span class='circle'></span>
-      <span class='circle'></span>
-      <span class='circle'></span>
+      {{#each menu}}
+        {{{this}}}
+      {{/each}}
     </div>
   </header>
   <main class='dialog__main'>
-    <span class='dialog__date'>11.07.2022</span>
+    <span class='dialog__date'>{{date}}</span>
     <div class='dialog__messages'>
       {{#each messages}}
-        <div class='message message_{{who}}'><p
+        <div class='message'><p
             class='message__text'
-          >{{messageText}}</p><time
+          >{{content}}</p><time
             class='message__time'
-          >{{messageTimestamp}}</time></div>
+          >{{time}}</time></div>
       {{/each}}
     </div>
   </main>

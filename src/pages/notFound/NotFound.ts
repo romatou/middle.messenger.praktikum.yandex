@@ -1,22 +1,21 @@
-import Block from '../../core/Block'
+import Block from '../../modules/Block'
 import template from './template.hbs'
 import './style.scss'
 
 interface PageProps {
   title: string
-  link: string
-  linkText: string
+  link: any
 }
 
-export default class PageNotFound extends Block<PageProps> {
-  constructor (props: PageProps) {
+export default class NotFound extends Block<PageProps> {
+  constructor(props: PageProps) {
     super('div', props)
   }
 
-  render () {
+  render() {
     return this.compile(template, {
       title: this.props.title,
-      linkText: this.props.linkText
+      link: this.props.link,
     })
   }
 }

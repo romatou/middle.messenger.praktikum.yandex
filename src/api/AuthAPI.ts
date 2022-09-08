@@ -1,30 +1,39 @@
 import HTTPTransport from '../modules/HTTPTransport'
 import BaseAPI from '../modules/BaseAPI'
-import BASE_URL from '../consts/BASE_URL'
 import { LoginFormModel, RegisterFormModel } from '../types/FormModel'
 import Store, { StoreEvents } from '../modules/Store'
+import UserController from '../controllers/UserController'
 
 class AuthAPI extends BaseAPI {
   public getUser() {
-    return HTTPTransport.get(`${BASE_URL}/auth/user`, {})
+    return HTTPTransport.get('/auth/user')
   }
 
   public request(user: LoginFormModel) {
-    return HTTPTransport.post(`${BASE_URL}/auth/signin`, {
+    return HTTPTransport.post('/auth/signin', {
       headers: { 'Content-Type': 'application/json' },
       data: user,
     })
   }
 
   public create(user: RegisterFormModel) {
-    return HTTPTransport.post(`${BASE_URL}/auth/signup`, {
+    return HTTPTransport.post('/auth/signup', {
+      credentials: 'include',
+      mode: 'cors',
       headers: { 'Content-Type': 'application/json' },
       data: user,
+    }).then(res => {
+      if (res.status === 200) {
+        UserController.getUser()
+        return true
+      } else {
+        return res.response
+      }
     })
   }
 
   public delete() {
-    return HTTPTransport.post(`${BASE_URL}/auth/logout`, {})
+    return HTTPTransport.post('/auth/logout')
   }
 }
 

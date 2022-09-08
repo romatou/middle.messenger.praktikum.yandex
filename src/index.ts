@@ -1,41 +1,26 @@
-import { pageLogin } from './pages/login'
-import { pageRegister } from './pages/register'
-import { pageServerError } from './pages/serverError'
-import { pageNotFound } from './pages/notFound'
-import { pageChangePass } from './pages/changePass'
-import { pageChats } from './pages/chats'
-import { pageProfile } from './pages/profile'
+import Router from './modules/Router'
 
-import renderDOM from './core/renderDOM'
+import login from './pages/login'
+import register from './pages/register'
+import chats from './pages/chats'
+import profile from './pages/profile'
+import notFound from './pages/notFound'
+import serverError from './pages/serverError'
+import changeData from './pages/profile/changeData/'
+import changePass from './pages/profile/changePass/'
+import changeAvatar from './pages/profile/changeAvatar/'
 
 import './scss/main.scss'
 
 document.addEventListener('DOMContentLoaded', () => {
-  window.onload = function () {
-    renderDOM('.app', pageLogin)
-    switch (window.location.pathname) {
-    case '/':
-      renderDOM('.app', pageLogin)
-      break
-    case '/register':
-      renderDOM('.app', pageRegister)
-      break
-    case '/chats':
-      renderDOM('.app', pageChats)
-      break
-    case '/profile':
-      renderDOM('.app', pageProfile)
-      break
-    case '/change-password':
-      renderDOM('.app', pageChangePass)
-      break
-    case '/500':
-      renderDOM('.app', pageServerError)
-      break
-    case '/404':
-    default:
-      renderDOM('.app', pageNotFound)
-      break
-    }
-  }
+  Router.use('/', login)
+    .use('/settings', profile)
+    .use('/sign-up', register)
+    .use('/messenger', chats)
+    .use('/500', serverError)
+    .use('*', notFound)
+    .use('/settings/change-data', changeData)
+    .use('/settings/change-password', changePass)
+    .use('/settings/change-avatar', changeAvatar)
+    .start()
 })

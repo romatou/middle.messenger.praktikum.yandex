@@ -14,13 +14,13 @@ class Router {
     Router.__instance = this
   }
 
-  use(pathname, block) {
+  public use(pathname, block) {
     const route = new Route(pathname, block, { rootQuery: this._rootQuery })
     this.routes.push(route)
     return this
   }
 
-  start() {
+  public start() {
     window.onpopstate = event => {
       this._onRoute(event.currentTarget?.location.pathname)
     }
@@ -28,7 +28,7 @@ class Router {
     this._onRoute(window.location.pathname)
   }
 
-  _onRoute(pathname) {
+  private _onRoute(pathname) {
     const route = this.getRoute(pathname)
 
     if (!route) {
@@ -44,20 +44,20 @@ class Router {
     route.render(route, pathname)
   }
 
-  go(pathname) {
+  public go(pathname) {
     this.history.pushState({}, '', pathname)
     this._onRoute(pathname)
   }
 
-  back() {
+  public back() {
     this.history.back()
   }
 
-  forward() {
+  public forward() {
     this.history.forward()
   }
 
-  getRoute(pathname) {
+  public getRoute(pathname) {
     return this.routes.find(route => route.match(pathname))
   }
 }

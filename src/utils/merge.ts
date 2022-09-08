@@ -3,9 +3,8 @@ type Indexed<T = any> = {
 }
 
 function merge(lhs: Indexed, rhs: Indexed): Indexed {
-  // Код здесь
   for (const p in rhs) {
-    if (!rhs.hasOwnProperty(p)) {
+    if (!rhs[p]) {
       continue
     }
 

@@ -1,13 +1,27 @@
 <div class="profile__sidebar">
-  <a class="profile__sidebar-link" href="/chats">{{link}}</a>
+  {{{link}}}
 </div>
 {{{avatar}}}
-<div class="name">{{profileData.firstName.text}}</div>
-<dl class="list">
-  {{{form}}}
-</dl>
+<div class="name">{{data.first_name}}</div>
+<div class="user-data">
+  <dl class="list">
+    <dt class="label">ID пользователя</dt>
+    <dd class="value">{{data.id}}</dd>
+    <dt class="label">Логин</dt>
+    <dd class="value">{{data.login}}</dd>
+    <dt class="label">Имя</dt>
+    <dd class="value">{{data.first_name}}</dd>
+    <dt class="label">Фамилия</dt>
+    <dd class="value">{{data.second_name}}</dd>
+    <dt class="label">Телефон</dt>
+    <dd class="value">{{data.phone}}</dd>
+    <dt class="label">Email</dt>
+    <dd class="value">{{data.email}}</dd>
+  </dl>
+</div>
 <div class="links">
-  <a class="link" href="">Изменить данные</a>
-  <a class="link" href="/change-password">Изменить пароль</a>
-  <a class="link" href="/">Выйти</a>
+  {{{changeAvatar}}}
+  {{{changeData}}}
+  {{{changePass}}}
+  {{{logout}}}
 </div>

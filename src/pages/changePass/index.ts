@@ -3,7 +3,7 @@ import Button from '../../components/button/Button'
 import Form from '../../components/form/Form'
 import Input from '../../components/input/Input'
 import Avatar from '../../components/avatar/Avatar'
-import { submitValidator } from '../../utils/validation'
+import { validateSubmit } from '../../utils/validate'
 import './style.scss'
 
 export const pageChangePass = new ChangePass({
@@ -15,7 +15,7 @@ terry-crews-person-of-year-2017-time-magazine-2.jpg`,
   events: {
     submit: e => {
       e.preventDefault()
-      submitValidator(e)
+      validateSubmit(e)
     }
   },
   form: new Form({

@@ -1,4 +1,4 @@
-import Block from '../../core/Block'
+import Block from '../../modules/Block'
 import template from './template.hbs'
 
 interface PageProps {
@@ -9,11 +9,16 @@ interface PageProps {
 }
 
 export default class ServerError extends Block<PageProps> {
-  constructor (props: PageProps) {
+  constructor(props: PageProps) {
     super('section', props)
   }
 
-  render () {
-    return template(this.props)
+  render() {
+    return this.compile(template, {
+      title: this.props.title,
+      paragraph: this.props.paragraph,
+      link: this.props.link,
+      className: this.props.className,
+    })
   }
 }

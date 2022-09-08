@@ -2,83 +2,81 @@
 import AuthAPI from '../api/AuthAPI'
 import Router from '../modules/Router'
 import store from '../modules/Store'
-import UserController from './UserController'
 import { validateSubmit } from '../utils/validate'
 import { LoginFormModel, RegisterFormModel } from '../types/FormModel'
 
 class AuthController {
-  public async getUser() {
+  public async getUser(isAuth: boolean) {
     try {
       const res = await AuthAPI.getUser()
 
-      if (res.status !== 200) {
-        console.error(`Ошибка запроса: ${res.reason}`)
-        store.set('user', null)
-      } else {
-        store.set('user', res.response)
+      if (res.status === 200) {
+        isAuth = true
+        const user = JSON.parse(res.response)
+        store.set('user', user)
+
+        if (window.location.pathname === '/') {
+          Router.go('/messenger')
+        }
       }
     } catch (err) {
-      console.error(err)
+      console.log(err.response)
     }
+
+    return isAuth
   }
 
   public async request(data: LoginFormModel) {
-    const isValid = validateSubmit(data)
+    try {
+      const isValid = validateSubmit(data)
 
-    if (isValid) {
-      const inputs = data.target.querySelectorAll('input')
-      const userData = {}
+      if (!isValid) {
+        throw new Error('Ошибка валидации')
+      }
 
-      inputs.forEach(input => {
-        userData[input.name] = input.value
-      })
-      return await AuthAPI.request(userData)
-        .then(res => {
-          if (res.status !== 200) {
-            const form = document.querySelector('.form')
-            const err = document.createElement('span')
-            err.classList.add('error')
-            const response = Object.values(res.response)
-            err.innerHTML = response[0]
-            form?.appendChild(err)
-            return res.response
-          }
+      const request = await AuthAPI.request(JSON.stringify(data))
 
+      if (request.status === 200) {
+        this.getUser()
+        Router.go('/messenger')
+      } else if (request.status === 400) {
+        const response = JSON.parse(request.response)
+
+        if (response.reason == 'User already in system') {
           Router.go('/messenger')
-        })
-        .catch(err => {
-          console.log(err)
-          return err
-        })
+        } else {
+          throw response.reason
+        }
+      } else {
+        console.error(request.response)
+      }
+    } catch (err) {
+      console.log('Пользователь не авторизован по причине:', err)
     }
   }
 
   public async create(data: RegisterFormModel) {
-    const isValid = validateSubmit(data)
+    try {
+      const isValid = validateSubmit(data)
 
-    if (isValid) {
-      const inputs = data.target.querySelectorAll('input')
-      const userData = {}
+      if (!isValid) {
+        throw new Error('Ошибка валидации')
+      }
 
-      inputs.forEach(input => {
-        userData[input.name] = input.value
-      })
+      const regData = await AuthAPI.create(JSON.stringify(data))
 
-      return await AuthAPI.create(userData)
-        .then(() => {
-          UserController.getUser()
-        })
-        .then(res => {
-          Router.go('/messenger')
-        })
-        .catch(err => {
-          throw new Error(err)
-        })
+      if (regData) {
+        Router.go('/messenger')
+      } else {
+        throw Error
+      }
+    } catch (err) {
+      console.error('Пользователь не зарегистрирован по причине:', err)
     }
   }
 
-  public delete() {
-    return AuthAPI.delete().then(res => {
+  public async delete() {
+    return await AuthAPI.delete().then(res => {
       Router.go('/')
     })
   }

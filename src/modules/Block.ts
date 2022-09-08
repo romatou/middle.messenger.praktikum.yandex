@@ -1,7 +1,7 @@
-import EventBus from './EventBus.ts'
+import EventBus from './EventBus'
 import { v4 } from 'uuid'
 
-abstract class Block<Props extends {}> {
+abstract class Block<Props> {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -124,7 +124,6 @@ abstract class Block<Props extends {}> {
 
   private _render(): HTMLElement {
     const block: HTMLElement = this.render()
-
     this.removeEvents()
     this._element.innerHTML = ''
 

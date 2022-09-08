@@ -1,75 +1,102 @@
 @import "../../scss/mixins";
 @import "../../scss/vars";
 
-.profile {
+.profile__sidebar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  left: 1rem;
   display: flex;
-  flex-flow: column;
-  overflow: hidden;
-  margin-left: auto;
-  margin-right: calc(-2rem - 2px);
+  align-items: center;
 
-  .window {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-
-  a {
-    color: lightblue;
-    text-decoration: none;
-    line-height: 1.5;
-
-    &:nth-child(3n) {
-      color: red;
-    }
-  }
-
-  .profile__sidebar-link {
-    text-decoration: none;
-    color: $textColorLight;
-    border: 1px solid $borderLight;
-    border-radius: 8px;
-    padding: 0.25rem 0.5rem;
+  .link {
+    border: 1px solid $bgColorLight;
+    padding: 1rem;
+    border-radius: 1rem;
+    width: 48px;
 
     &:hover {
-      background: rgba(255, 255, 255, 0.253);
-      transition-duration: 0.4s;
+      background: $bgColorLight;
+      opacity: 0.5;
+      color: #000;
+      cursor: pointer;
     }
   }
+}
 
-  .avatar {
-    @include borderStyle(2px, 50%);
+.window {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
 
-    width: 48px;
-    display: flex;
-    height: 48px;
-    flex-shrink: 0;
-    margin: 0 auto 0.5rem;
-    margin-bottom: 1rem;
-    overflow: hidden;
+a {
+  color: lightblue;
+  text-decoration: none;
+  line-height: 1.5;
 
-    img {
-      overflow: hidden;
-      height: 100%;
-      width: auto;
-    }
+  &:nth-child(3n) {
+    color: red;
   }
+}
 
-  .name {
-    color: $textColorLight;
-    text-align: center;
-    font-weight: 500;
-  }
-
+.user-data {
   .list {
     line-height: 2;
     margin-bottom: 4rem;
     color: $textColorLight;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    flex-wrap: wrap;
+    align-items: center;
 
-    dd {
+    .label {
+      font-size: 16px;
+    }
+
+    .value {
       justify-self: end;
       margin: 0;
+      font-size: 16px;
     }
   }
+}
+
+.profile__sidebar-link {
+  text-decoration: none;
+  color: $textColorLight;
+  border: 1px solid $borderLight;
+  border-radius: 8px;
+  padding: 0.25rem 0.5rem;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.253);
+    transition-duration: 0.4s;
+  }
+}
+
+.avatar {
+  @include borderStyle(2px, 50%);
+
+  width: 48px;
+  display: flex;
+  height: 48px;
+  flex-shrink: 0;
+  margin: 0 auto 0.5rem;
+  margin-bottom: 1rem;
+  overflow: hidden;
+
+  img {
+    overflow: hidden;
+    height: 100%;
+    width: auto;
+  }
+}
+
+.name {
+  color: $textColorLight;
+  text-align: center;
+  font-weight: 500;
 }
 
 .links {
@@ -77,5 +104,9 @@
     display: block;
     color: $textColorLight;
     text-decoration: none;
+  }
+
+  .btn {
+    margin-top: 1rem;
   }
 }

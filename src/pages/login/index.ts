@@ -1,47 +1,54 @@
 import Login from './Login'
 import Button from '../../components/button/Button'
+import Link from '../../components/link/Link'
 import Form from '../../components/form/Form'
 import Input from '../../components/input/Input'
-import { inputValidator, submitValidator } from '../../utils/validation'
+import AuthController from '../../controllers/AuthController'
+import { validateInput } from '../../utils/validate'
 
 import './style.scss'
 
-export const pageLogin = new Login({
+const login = new Login({
   title: 'Войти',
   form: new Form({
     fields: [
       new Input({
         name: 'login',
         label: 'Логин',
-        inputType: 'text',
-        placeholder: 'Введите логин'
+        type: 'text',
+        placeholder: 'Введите логин',
       }),
       new Input({
         name: 'password',
         label: 'Пароль',
-        inputType: 'text',
-        placeholder: 'Введите пароль'
-      })
+        type: 'password',
+        placeholder: 'Введите пароль',
+      }),
     ],
     events: {
       focus: (e: Event) => {
-        inputValidator(e)
+        validateInput(e)
       },
       blur: (e: Event) => {
-        inputValidator(e)
-      }
+        validateInput(e)
+      },
+      submit: (e: Event) => {
+        e.preventDefault()
+        const formData = new FormData(e.target)
+        const queryData = {}
+        formData.forEach((value, key) => (queryData[key] = value))
+        AuthController.request(queryData)
+      },
     },
     button: new Button({
       label: 'Войти',
-      inputType: 'submit',
-      events: {
-        click: (e: Event) => {
-          if ((e.target as HTMLButtonElement).tagName === 'BUTTON') {
-            submitValidator(e)
-          }
-        }
-      }
-    })
+      type: 'submit',
+    }),
   }),
-  link: 'Зарегистрироваться'
+  link: new Link({
+    text: 'Зарегистрироваться',
+    to: '/sign-up',
+  }),
 })
+
+export default login

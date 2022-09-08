@@ -1,11 +1,11 @@
 import REGEXP from '../consts/REGEXP'
 
 const validateInput = (e: Event): void => {
-  const item: HTMLInputElement = e.target
-  const expression: object = REGEXP[item.name].expression
-  const check: boolean = expression.test(item.value)
-  const parent: HTMLElement = item.parentElement
-  const input: HTMLInputElement = parent.querySelector('input')
+  const item: any = e.target
+  const expression: any = REGEXP[item.name].expression
+  const check: any = expression.test(item.value)
+  const parent: any = item.parentElement
+  const input: any = parent.querySelector('input')
   const inputCount: number = parent.childElementCount
 
   if (input.name === item.name) {
@@ -31,26 +31,19 @@ const validateInput = (e: Event): void => {
   }
 }
 
-const validateSubmit = (e: Event): boolean | undefined => {
-  e.preventDefault()
-
+const validateSubmit = (data: Record<string, string>): boolean => {
   let isValid = false
 
-  const inputs = document.querySelectorAll('input')
-  const userData: object = {}
   try {
-    inputs.forEach(input => {
-      if (input.name !== 'search') {
-        if (!REGEXP[input.name].expression.test(input.value)) {
-          throw {
-            field: input.placeholder,
-          }
-        } else {
-          isValid = true
-          userData[input.name] = input.value
+    for (const [key, value] of Object.entries(data)) {
+      if (!REGEXP[key].expression.test(value)) {
+        throw {
+          field: REGEXP[key].title,
         }
+      } else {
+        isValid = true
       }
-    })
+    }
 
     return isValid
   } catch ({ field }) {

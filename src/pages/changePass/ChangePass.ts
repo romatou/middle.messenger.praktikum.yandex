@@ -1,23 +1,21 @@
-import Block from '../../core/Block'
+import Block from '../../modules/Block'
 import template from './template.hbs'
-import Button from '../../components/button/Button'
+// import Button from '../../components/button/Button'
 
-interface PageProps {
-  avatar: object
-  form: object
+interface IChangePass {
+  form: any
   events?: {
     submit: (e: Event) => void
   }
 }
-export default class ChangePass extends Block<PageProps> {
-  constructor (props: PageProps) {
+export default class ChangePass extends Block<IChangePass> {
+  constructor(props: IChangePass) {
     super('section', props)
   }
 
-  render () {
+  render() {
     return this.compile(template, {
-      avatar: this.props.avatar,
-      form: this.props.form
+      form: this.props.form,
     })
   }
 }

@@ -1,24 +1,32 @@
 {
   "name": "chatscript",
   "version": "1.0.0",
-  "source": "src/index.html",
+  "source": "index.html",
   "scripts": {
-    "dev": "parcel src/index.html",
-    "build": "parcel build src/index.html",
+    "dev": "parcel index.html",
+    "build": "parcel build index.html",
     "start": "npm run build && node server.js",
-    "lint": "npx eslint src/**/*.ts",
-    "lint:fix": "npx eslint --fix ./src/**/*.ts"
+    "lint": "npx eslint src/**/*.ts && tsc --noEmit src/**/*.ts",
+    "lint:fix": "npx eslint --fix ./src/**/*.ts",
+    "test": "./node_modules/.bin/mocha"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "2.6.2",
+    "@types/chai": "4.3.3",
+    "@types/mocha": "9.1.1",
+    "@types/node": "18.7.20",
     "@typescript-eslint/eslint-plugin": "5.33.1",
     "@typescript-eslint/parser": "5.31.0",
     "autoprefixer": "10.4.7",
+    "chai": "4.3.6",
     "eslint": "8.22.0",
     "eslint-config-standard-with-typescript": "22.0.0",
     "handlebars": "4.7.7",
+    "mocha": "10.0.0",
     "parcel": "2.6.2",
     "parcel-transformer-hbs": "1.0.4",
+    "stylelint": "14.10.0",
+    "stylelint-config-recommended": "9.0.0",
     "typescript": "4.7.4",
     "uuid": "8.3.2"
   },

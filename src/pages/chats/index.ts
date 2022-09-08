@@ -1,67 +1,55 @@
-import Messages from './messages/Messages'
-import Dialog from './dialog/Dialog'
+import Chats from './Chats'
 import Input from '../../components/input/Input'
 import Button from '../../components/button/Button'
-import Avatar from '../../components/avatar/Avatar'
 import Form from '../../components/form/Form'
-import data from '../../data/usersList.json'
-import messageData from '../../data/chat.json'
-import renderDOM from '../../core/renderDOM'
-import { inputValidator, submitValidator } from '../../utils/validation'
+import Link from '../../components/link/Link'
+import Modal from '../../components/modal/Modal'
+import ChatController from '../../controllers/ChatController'
 
-export const pageChats = new Messages({
+const chats = new Chats({
   search: new Input({
     name: 'search',
     label: 'Поиск',
-    inputType: 'text',
+    type: 'text',
     placeholder: 'поиск чата',
   }),
-  messages: data.messages,
-  events: {
-    click: (e: Event) => {
-      const target = e.target as HTMLElement
-      if (target.tagName === 'A') {
-        (target.parentElement as HTMLElement)
-          .querySelectorAll('.active')
-          .forEach(e => e.classList.remove('active'))
-        target.classList.add('active')
-        renderDOM('.chat__dialog', pageActiveChat)
-      }
-      if (target.tagName === 'INPUT') {
-        inputValidator(e)
-      }
-      if (target.tagName === 'BUTTON') {
-        submitValidator(e)
-      }
+  profileLink: new Link({
+    text: 'Профиль',
+    to: '/settings',
+  }),
+  addChat: new Button({
+    label: 'Добавить чат',
+    type: 'button',
+    events: {
+      click: (e: Event) => {
+        const addChatModal = new Modal({
+          content: new Form({
+            fields: [
+              new Input({
+                name: 'title',
+              }),
+            ],
+            button: new Button({
+              label: 'Добавить чат',
+              type: 'submit',
+            }),
+            events: {
+              submit: (e: Event) => {
+                e.preventDefault()
+                const formData = new FormData(e.target)
+                const queryData = {}
+                formData.forEach((value, key) => (queryData[key] = value))
+                ChatController.createChat(queryData)
+              },
+            },
+          }),
+        })
+
+        const root = document.querySelector('.app')
+        root.appendChild(addChatModal.getContent())
+      },
     },
-  },
+  }),
 })
 
-export const pageActiveChat = new Dialog({
-  messages: messageData,
-  avatar: new Avatar({
-    image: `https://api.time.com
-/wp-content/uploads/2017/12/
-terry-crews-person-of-year-2017-time-magazine-2.jpg`,
-    name: 'user-logo',
-  }),
-  form: new Form({
-    fields: [
-      new Input({
-        name: 'message',
-        inputType: 'text',
-        placeholder: 'Введите сообщение',
-      }),
-    ],
-    button: new Button({
-      inputType: 'submit',
-      label: 'Отправить',
-    }),
-  }),
-  events: {
-    submit: (e: Event) => {
-      e.preventDefault()
-      submitValidator(e)
-    },
-  },
-})
+export default chats

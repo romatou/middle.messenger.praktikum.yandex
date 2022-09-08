@@ -1,18 +1,14 @@
 import EventBus from './EventBus'
 import set from '../utils/set'
 
-type Indexed<T = any> = {
-  [key in string]: T
-}
-
 export enum StoreEvents {
-  Updated = 'updated',
+  Updated = 'Обновление хранилища',
 }
 
 export const state = {}
 
 class Store extends EventBus {
-  private state: Indexed = {}
+  private state: Record<string, any> = {}
 
   public getState() {
     return this.state
@@ -24,6 +20,4 @@ class Store extends EventBus {
   }
 }
 
-const store = new Store()
-
-export default store
+export default new Store()

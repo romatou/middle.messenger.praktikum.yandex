@@ -1,5 +1,8 @@
-import Block from '../../core/Block'
+import Block from '../../modules/Block'
 import template from './template.hbs'
+import store, { StoreEvents } from '../../modules/Store'
+import Router from '../../modules/Router'
+import AuthController from '../../controllers/AuthController'
 
 interface LoginProps {
   title: string
@@ -8,15 +11,15 @@ interface LoginProps {
 }
 
 export default class Login extends Block<LoginProps> {
-  constructor (props: LoginProps) {
+  constructor(props: LoginProps) {
     super('section', props)
   }
 
-  render () {
+  render() {
     return this.compile(template, {
       title: this.props.title,
       form: this.props.form,
-      link: this.props.link
+      link: this.props.link,
     })
   }
 }

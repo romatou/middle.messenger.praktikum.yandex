@@ -1,8 +1,9 @@
 import isEqualStringify from '../utils/isEqualStringify'
+import Block from '../modules/Block'
 import renderDOM from '../modules/renderDOM'
 
 export default class Route {
-  constructor(pathname, view, props) {
+  constructor(pathname: string, view: typeof Block, props: any) {
     this._pathname = pathname
     this._blockClass = view
     this._block = null
@@ -27,7 +28,9 @@ export default class Route {
   }
 
   render() {
-    this._block = this._blockClass
+    if (!this._block) {
+      this._block = this._blockClass
+    }
     renderDOM(this._props.rootQuery, this._block)
     return
   }

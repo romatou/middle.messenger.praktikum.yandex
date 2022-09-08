@@ -1,5 +1,5 @@
 import './style.scss'
-import Block from '../../core/Block'
+import Block from '../../modules/Block'
 import template from './template.hbs'
 
 interface IPage {
@@ -13,15 +13,15 @@ interface IPage {
 }
 
 export default class Register extends Block<IPage> {
-  constructor (props: IPage) {
+  constructor(props: IPage) {
     super('section', props)
   }
 
-  render (): HTMLElement {
+  render() {
     return this.compile(template, {
       title: this.props.title,
       form: this.props.form,
-      link: this.props.link
+      link: this.props.link,
     })
   }
 }

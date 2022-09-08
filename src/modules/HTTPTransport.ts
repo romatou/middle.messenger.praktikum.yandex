@@ -1,3 +1,4 @@
+import BASE_URL from '../consts/BASE_URL'
 import queryStringify from '../utils/queryStringify'
 
 enum Methods {
@@ -15,36 +16,38 @@ interface Options {
 }
 
 class HTTPTransport {
+  private _baseURL = BASE_URL
+
   public get = async (url: string, options?: Options) => {
-    return await this.request(url, {
+    return await this.request(`${this._baseURL}${url}`, {
       ...options,
       method: Methods.GET,
     })
   }
 
   public post = async (url: string, options?: Options) => {
-    return await this.request(url, {
+    return await this.request(`${this._baseURL}${url}`, {
       ...options,
       method: Methods.POST,
     })
   }
 
   public put = async (url: string, options?: Options) => {
-    return await this.request(url, {
+    return await this.request(`${this._baseURL}${url}`, {
       ...options,
       method: Methods.PUT,
     })
   }
 
   public delete = async (url: string, options?: Options) => {
-    return await this.request(url, {
+    return await this.request(`${this._baseURL}${url}`, {
       ...options,
       method: Methods.DELETE,
     })
   }
 
   private readonly request = async (url: string, options: Options) => {
-    const { headers = {}, timeout = 5000, method, data } = options
+    const { headers = {}, timeout = 5000, method, data = {} } = options
 
     return new Promise(function (resolve, reject) {
       if (!method) {
@@ -66,7 +69,7 @@ class HTTPTransport {
       }
 
       xhr.withCredentials = true
-      xhr.responseType = 'json'
+
       xhr.onabort = reject
       xhr.onerror = reject
       xhr.timeout = timeout
@@ -74,11 +77,6 @@ class HTTPTransport {
 
       if (isGet || !data) {
         xhr.send()
-      } else if (
-        options?.headers &&
-        options.headers['content-type'] === 'application/json'
-      ) {
-        xhr.send(JSON.stringify(data))
       } else {
         xhr.send(data)
       }
