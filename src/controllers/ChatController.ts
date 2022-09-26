@@ -12,22 +12,20 @@ class ChatController {
 
   public async requestChats() {
     await ChatAPI.requestChats()
-      .then(res => {
-        if (res.length !== 0) {
-          return JSON.parse(res.response)
-        }
-      })
-      .then(data => {
-        store.set('chats', data)
-      })
+      .then(res => JSON.parse(res.response))
+      .then(data => store.set('chats', data))
+      .catch(err => console.error(err))
   }
 
-  public async createChat(data) {
-    await ChatAPI.createChat(JSON.stringify(data))
+  public async createChat(data: any) {
+    await ChatAPI.createChat(data)
       .then(res => {
         if (res.status === 200) {
           this.requestChats()
           document.querySelector('.modal')?.remove()
+        } else {
+          const error = JSON.parse(res.response)
+          throw Error(error.error)
         }
       })
       .catch(err => {
@@ -36,16 +34,21 @@ class ChatController {
   }
 
   public async deleteChat(chatId) {
-    await ChatAPI.deleteChat(JSON.stringify(chatId))
-      .then(res => {
-        if (res.status === 200) {
+    if (chatId) {
+      await ChatAPI.deleteChat(chatId)
+        .then(res => {
           document.querySelector('.modal')?.remove()
-          this.requestChats()
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      })
+
+          if (res.status === 200) {
+            this.requestChats()
+          } else {
+            throw Error
+          }
+        })
+        .catch(err => {
+          console.error(`Причина: ${err}`)
+        })
+    }
   }
 
   public async addUser(user, chat) {
@@ -53,9 +56,10 @@ class ChatController {
       .then(res => {
         if (res.status === 200) {
           document.querySelector('.modal')?.remove()
+        } else {
+          throw Error(res.response)
         }
       })
-
       .catch(err => {
         console.log(err)
       })
@@ -74,21 +78,10 @@ class ChatController {
   }
 
   public async connectToChat(id) {
-    const user = await ChatAPI.getChatUsers(id)
-      .then(res => {
-        const users = JSON.parse(res.response)
-
-        // Необходимо удалить себя из объекта и оставить только ID собеседника
-        users.forEach((user, index) => {
-          if (user.id != store.getState().user.id) {
-            users.splice(index, 1)
-          }
-        })
-        return users
-      })
-      .then(data => {
-        return data[0].id
-      })
+    const userId = await ChatAPI.getChatUsers(id)
+      .then(res => JSON.parse(res.response))
+      .then(data => data.find(user => user.id === store.getState().user.id))
+      .then(user => user.id)
       .catch(err => {
         console.err(err)
       })
@@ -100,7 +93,7 @@ class ChatController {
         console.log(err)
       })
 
-    this._socket = new Socket(user, id, token)
+    this._socket = new Socket(userId, id, token)
   }
 
   public sendMessage(message) {

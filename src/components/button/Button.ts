@@ -2,7 +2,7 @@ import Block from '../../modules/Block'
 import template from './template.hbs'
 import './Button.scss'
 
-interface IButton {
+export interface IButton {
   label: string
   type: string
   events?: {

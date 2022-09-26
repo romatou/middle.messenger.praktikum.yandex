@@ -1,4 +1,3 @@
-import isEqualStringify from '../utils/isEqualStringify'
 import Block from '../modules/Block'
 import renderDOM from '../modules/renderDOM'
 
@@ -24,7 +23,7 @@ export default class Route {
   }
 
   match(pathname) {
-    return isEqualStringify(pathname, this._pathname)
+    return pathname === this._pathname
   }
 
   render() {

@@ -6,24 +6,24 @@ import { validateSubmit } from '../utils/validate'
 import { LoginFormModel, RegisterFormModel } from '../types/FormModel'
 
 class AuthController {
-  public async getUser(isAuth: boolean) {
-    try {
-      const res = await AuthAPI.getUser()
+  public async getUser() {
+    await AuthAPI.getUser()
+      .then((res: any): void => {
+        if (res.status === 200) {
+          localStorage.setItem('user', res.response)
+          const user = JSON.parse(res.response)
+          store.set('user', user)
 
-      if (res.status === 200) {
-        isAuth = true
-        const user = JSON.parse(res.response)
-        store.set('user', user)
-
-        if (window.location.pathname === '/') {
-          Router.go('/messenger')
+          if (window.location.pathname === '/') {
+            Router.go('/messenger')
+          }
+        } else {
+          throw Error(res.response)
         }
-      }
-    } catch (err) {
-      console.log(err.response)
-    }
-
-    return isAuth
+      })
+      .catch(err => {
+        console.error(err)
+      })
   }
 
   public async request(data: LoginFormModel) {
@@ -34,22 +34,22 @@ class AuthController {
         throw new Error('Ошибка валидации')
       }
 
-      const request = await AuthAPI.request(JSON.stringify(data))
-
-      if (request.status === 200) {
-        this.getUser()
-        Router.go('/messenger')
-      } else if (request.status === 400) {
-        const response = JSON.parse(request.response)
-
-        if (response.reason == 'User already in system') {
+      await AuthAPI.request(data).then(res => {
+        if (res.status === 200) {
+          this.getUser()
           Router.go('/messenger')
+        } else if (res.status === 400) {
+          const response = JSON.parse(res.response)
+
+          if (res.reason == 'User already in system') {
+            Router.go('/messenger')
+          } else {
+            throw res.reason
+          }
         } else {
-          throw response.reason
+          console.error(res.response)
         }
-      } else {
-        console.error(request.response)
-      }
+      })
     } catch (err) {
       console.log('Пользователь не авторизован по причине:', err)
     }
@@ -63,7 +63,14 @@ class AuthController {
         throw new Error('Ошибка валидации')
       }
 
-      const regData = await AuthAPI.create(JSON.stringify(data))
+      const regData = await AuthAPI.create(JSON.stringify(data)).then(res => {
+        if (res.status === 200) {
+          UserController.getUser()
+          return true
+        } else {
+          return res.response
+        }
+      })
 
       if (regData) {
         Router.go('/messenger')

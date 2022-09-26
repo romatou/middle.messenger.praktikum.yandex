@@ -2,7 +2,7 @@ import template from './template.hbs'
 import Block from '../../modules/Block'
 import './Input.scss'
 
-interface IInput {
+export interface IInput {
   name: string
   label?: string
   placeholder?: string

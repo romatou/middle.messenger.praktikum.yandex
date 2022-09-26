@@ -1,9 +1,11 @@
 import Block from '../../modules/Block'
 import template from './template.hbs'
+import IInput from '../input/Input'
+import IButton from '../button/Button'
 
-interface FormProps {
-  fields: unknown
-  button: unknown
+export interface IForm {
+  fields: IInput[]
+  button: IButton
   events?: {
     focus: (e: Event) => void
     blur: (e: Event) => void
@@ -11,8 +13,8 @@ interface FormProps {
   }
 }
 
-export default class Form extends Block<FormProps> {
-  constructor(props: FormProps) {
+export default class Form extends Block<IForm> {
+  constructor(props: IForm) {
     super('div', props)
   }
 
@@ -20,20 +22,20 @@ export default class Form extends Block<FormProps> {
     const { events = {} } = this.props
     const inputs = this.element.querySelectorAll('input')
 
-    inputs.forEach(item => {
+    inputs.forEach((item: IInput) => {
       Object.keys(events).forEach(eventName => {
         item.addEventListener(eventName, events[eventName])
       })
     })
 
     Object.keys(events).forEach(eventName => {
-      this._element.addEventListener(eventName, events[eventName])
+      this.element.addEventListener(eventName, events[eventName])
     })
   }
 
   removeEvents() {
     const { events = {} } = this.props
-    const inputs = this.element!.querySelectorAll('input')
+    const inputs = this.element.querySelectorAll('input')
 
     inputs.forEach(item => {
       Object.keys(events).forEach(eventName => {
@@ -42,7 +44,7 @@ export default class Form extends Block<FormProps> {
     })
 
     Object.keys(events).forEach(eventName => {
-      this._element.addEventListener(eventName, events[eventName])
+      this.element.addEventListener(eventName, events[eventName])
     })
   }
 

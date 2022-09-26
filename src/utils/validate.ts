@@ -4,8 +4,8 @@ const validateInput = (e: Event): void => {
   const item: any = e.target
   const expression: any = REGEXP[item.name].expression
   const check: any = expression.test(item.value)
-  const parent: any = item.parentElement
-  const input: any = parent.querySelector('input')
+  const parent: HTMLElement = item.parentElement
+  const input: HTMLInputElement = parent.querySelector('input')
   const inputCount: number = parent.childElementCount
 
   if (input.name === item.name) {

@@ -1,27 +1,32 @@
-import BaseAPI from '../modules/BaseAPI'
 import HTTPTransport from '../modules/HTTPTransport'
 
-class UserAPI extends BaseAPI {
-  public async getUser() {
+class UserAPI {
+  public async getUser<Response>(): Promise<Response> {
     return HTTPTransport.get('/auth/user')
   }
 
-  public async update(data) {
+  public async update<Response>(
+    data: Record<string, string>
+  ): Promise<Response> {
     return HTTPTransport.put('/user/profile', {
       headers: { 'Content-Type': 'application/json' },
       data: data,
     })
   }
 
-  public async updatePassword(data) {
+  public async updatePassword<Response>(
+    data: Record<string, string>
+  ): Promise<Response> {
     return HTTPTransport.put('/user/password', {
-      headers: { 'Content-Type': 'application/json' },
       data: data,
     })
   }
 
-  public async updateAvatar(data) {
+  public async updateAvatar<Response>(
+    data: Record<string, string>
+  ): Promise<Response> {
     return HTTPTransport.put('/user/profile/avatar', {
+      headers: {},
       credentials: 'include',
       mode: 'cors',
       data: data,

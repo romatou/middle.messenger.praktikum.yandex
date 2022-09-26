@@ -9,62 +9,71 @@ enum Methods {
 }
 
 interface Options {
-  headers?: Record<unknown, string>
-  method: Methods
-  data?: Record<string, string>
+  headers?: Record<string, string>
+  data?: any
+  method?: Methods
   timeout?: number
 }
 
 class HTTPTransport {
   private _baseURL = BASE_URL
+  public _defaultHeader = { 'content-type': 'application/json' }
 
-  public get = async (url: string, options?: Options) => {
-    return await this.request(`${this._baseURL}${url}`, {
-      ...options,
-      method: Methods.GET,
-    })
+  public get<Response>(url: string, options?: Options): Promise<Response> {
+    return this.request(
+      options?.data
+        ? `${this._baseURL}${url}?${queryStringify(options.data)}`
+        : `${this._baseURL}${url}`,
+      {
+        ...options,
+        method: Methods.GET,
+      }
+    )
   }
 
-  public post = async (url: string, options?: Options) => {
-    return await this.request(`${this._baseURL}${url}`, {
+  public post<Response>(url: string, options?: Options): Promise<Response> {
+    return this.request(`${this._baseURL}${url}`, {
       ...options,
       method: Methods.POST,
     })
   }
 
-  public put = async (url: string, options?: Options) => {
-    return await this.request(`${this._baseURL}${url}`, {
+  public put<Response>(url: string, options?: Options): Promise<Response> {
+    return this.request(`${this._baseURL}${url}`, {
       ...options,
       method: Methods.PUT,
     })
   }
 
-  public delete = async (url: string, options?: Options) => {
-    return await this.request(`${this._baseURL}${url}`, {
+  public delete<Response>(url: string, options?: Options): Promise<Response> {
+    return this.request(`${this._baseURL}${url}`, {
       ...options,
       method: Methods.DELETE,
     })
   }
 
-  private readonly request = async (url: string, options: Options) => {
-    const { headers = {}, timeout = 5000, method, data = {} } = options
+  private request<Response>(url: string, options: Options): Promise<Response> {
+    const {
+      headers = this._defaultHeader,
+      timeout = 5000,
+      method,
+      data = {},
+    } = options
 
-    return new Promise(function (resolve, reject) {
+    return new Promise(function(resolve, reject) {
       if (!method) {
         reject('Не указан метод')
         return
       }
 
       const xhr = new XMLHttpRequest()
-      const isGet = method === Methods.GET
-
-      xhr.open(method, isGet && !!data ? `${url}?${queryStringify(data)}` : url)
+      xhr.open(method, url)
 
       Object.keys(headers).forEach(key => {
         xhr.setRequestHeader(key, headers[key])
       })
 
-      xhr.onload = function () {
+      xhr.onload = function() {
         resolve(xhr)
       }
 
@@ -75,8 +84,13 @@ class HTTPTransport {
       xhr.timeout = timeout
       xhr.ontimeout = reject
 
-      if (isGet || !data) {
+      if (!data) {
         xhr.send()
+      } else if (
+        options?.headers &&
+        options?.headers['content-type'] === 'application/json'
+      ) {
+        xhr.send(JSON.stringify(data))
       } else {
         xhr.send(data)
       }

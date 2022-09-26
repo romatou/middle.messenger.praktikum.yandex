@@ -1,56 +1,40 @@
 import HTTPTransport from '../modules/HTTPTransport'
-import BaseAPI from '../modules/BaseAPI'
 
-class ChatAPI extends BaseAPI {
-  public requestChats() {
+class ChatAPI {
+  public requestChats<Response>(): Promise<Response> {
     return HTTPTransport.get('/chats', { data: { limit: 6 } })
   }
 
-  public createChat(data = {}) {
+  public createChat<Response>(data: any): Promise<Response> {
     return HTTPTransport.post('/chats', {
-      headers: { 'content-type': 'application/json' },
       data: data,
     })
   }
 
-  public deleteChat(chatId) {
-    const parsedData = JSON.stringify({ chatId: chatId })
+  public deleteChat<Response>(chatId: number): Promise<Response> {
     return HTTPTransport.delete('/chats', {
-      headers: { 'content-type': 'application/json' },
-      data: parsedData,
+      data: { chatId: chatId },
     })
   }
 
-  public addUser(user, chat) {
-    const strData = JSON.stringify({
-      users: [user],
-      chatId: chat,
-    })
-
+  public addUser<Response>(user: number, chatId: number): Promise<Response> {
     return HTTPTransport.put('/chats/users', {
-      headers: { 'content-type': 'application/json' },
-      data: strData,
+      data: { users: [user], chatId: chatId },
     })
   }
 
-  public deleteUser(user, chatId) {
-    const strData = JSON.stringify({
-      users: [user],
-      chatId: chatId,
-    })
-
+  public deleteUser<Response>(user: number, chatId: number): Promise<Response> {
     return HTTPTransport.put('/chats/users', {
-      headers: { 'content-type': 'application/json' },
-      data: strData,
+      data: { users: [user], chatId: chatId },
     })
   }
 
-  public getChatUsers(id) {
+  public getChatUsers<Response>(id: number): Promise<Response> {
     return HTTPTransport.get(`/chats/${id}/users`)
   }
 
-  public getChatToken(id) {
-    return HTTPTransport.post(`/chats/token/${id}`)
+  public getChatToken<Response>(id: number): Promise<Response> {
+    return HTTPTransport.post(`/chats/token/${id}`, { headers: {} })
   }
 }
 

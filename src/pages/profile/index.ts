@@ -4,13 +4,14 @@ import Link from '../../components/link/Link'
 import Avatar from '../../components/avatar/Avatar'
 import './profile.scss'
 import AuthController from '../../controllers/AuthController'
+import ProfileDummy from '../../../static/images/user.png'
 
 const profile = new Profile({
   logout: new Button({
     label: 'Выйти',
     type: 'submit',
     events: {
-      click: (e: Event) => {
+      click: () => {
         AuthController.delete()
       },
     },
@@ -32,10 +33,9 @@ const profile = new Profile({
     to: '/messenger',
   }),
   avatar: new Avatar({
-    // image: `https://ya-praktikum.tech/api/v2/resources${userDataParsed.avatar}`,
-    name: 'profile-logo',
+    image: ProfileDummy,
+    name: 'Аватар пользователя',
   }),
-
   button: new Button({
     label: 'Сохранить',
     type: 'submit',

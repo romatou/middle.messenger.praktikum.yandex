@@ -15,10 +15,9 @@ class UserController {
 
   public async update(data) {
     await UserAPI.update(JSON.stringify(data))
-      .then(res => {
-        return res.response
-      })
+      .then(res => res.response)
       .then(data => {
+        localStorage.setItem('user', data)
         const userData = JSON.parse(data)
         store.set('user', userData)
         Router.go('/settings')
@@ -51,8 +50,7 @@ class UserController {
           store.set('user', newData)
           Router.go('/settings')
         } else {
-          console.log(res.reason)
-          return
+          throw Error(res.response)
         }
       })
       .catch(err => {

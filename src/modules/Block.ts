@@ -1,5 +1,5 @@
 import EventBus from './EventBus'
-import { v4 } from 'uuid'
+import { v4 as uuid } from 'uuid'
 
 abstract class Block<Props> {
   static EVENTS = {
@@ -9,8 +9,8 @@ abstract class Block<Props> {
     FLOW_RENDER: 'flow:render',
   }
 
-  private _element: Nullable<HTMLElement> = null
-  public eventBus: () => void = EventBus
+  private _element: HTMLElement | null = null
+  public eventBus = EventBus
   private readonly _meta: Record<string, Props>
   private readonly _id: string
   public children: Props
@@ -23,7 +23,7 @@ abstract class Block<Props> {
 
     const eventBus = new EventBus()
 
-    this._id = v4()
+    this._id = uuid()
 
     this._meta = {
       tagName,
@@ -122,12 +122,12 @@ abstract class Block<Props> {
     return this._element
   }
 
-  private _render(): HTMLElement {
+  private _render(): any {
     const block: HTMLElement = this.render()
     this.removeEvents()
     this._element.innerHTML = ''
 
-    this._element.append(block)
+    this._element?.append(block)
 
     this.addEvents()
   }
@@ -168,7 +168,7 @@ abstract class Block<Props> {
     return element
   }
 
-  compile(template: string, props: unknown): DocumentFragment {
+  compile(template: any, props: any): DocumentFragment {
     const propsAndStubs = { ...props }
     Object.entries(this.children).forEach(([key, child]) => {
       if (Array.isArray(child)) {
@@ -181,7 +181,7 @@ abstract class Block<Props> {
       }
     })
 
-    const fragment: HTMLElement = this._createDocumentElement('template')
+    const fragment: any = this._createDocumentElement('template')
 
     fragment.innerHTML = template(propsAndStubs)
     Object.values(this.children).forEach((child: HTMLElement) => {
@@ -209,7 +209,7 @@ abstract class Block<Props> {
   }
 
   remove() {
-    this._element.remove()
+    this._element?.remove()
   }
 }
 
