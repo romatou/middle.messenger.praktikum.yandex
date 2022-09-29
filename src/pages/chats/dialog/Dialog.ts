@@ -21,8 +21,28 @@ interface DialogProps {
 class Dialog extends Block<DialogProps> {
   constructor(props: DialogProps) {
     super('section', props)
-
     ChatController.connectToChat(props.id)
+
+    store.on(StoreEvents.Updated, () => {
+      props.messages = store.getState().messages
+    })
+  }
+
+  protected addEvents(): void {
+    const { events = {} } = this.props
+
+    Object.keys(events).forEach(eventName => {
+      this._element.addEventListener(eventName, events[eventName])
+    })
+
+    const dialogWindow = document.querySelector('.dialog__main')
+    const messages = document.querySelector('.dialog__messages')
+
+    if (dialogWindow) {
+      //console.log(dialogWindow.scrollTo(0, dialogWindow.scrollHeight))
+
+      dialogWindow.scroll(0, messages?.scrollHeight)
+    }
   }
 
   render() {

@@ -1,18 +1,18 @@
 import Block from '../../modules/Block'
 import template from './template.hbs'
-import store, { StoreEvents } from '../../modules/Store'
-import Router from '../../modules/Router'
+import { ILink } from '../../components/link/Link'
 import AuthController from '../../controllers/AuthController'
 
 interface LoginProps {
   title: string
   form: object
-  link: string
+  link: ILink
 }
 
 export default class Login extends Block<LoginProps> {
   constructor(props: LoginProps) {
     super('section', props)
+    AuthController.getUser()
   }
 
   render() {

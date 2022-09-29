@@ -7,6 +7,7 @@ import Modal from '../../components/modal/Modal'
 import ChatController from '../../controllers/ChatController'
 
 const chats = new Chats({
+  chats: [],
   search: new Input({
     name: 'search',
     label: 'Поиск',

@@ -21,12 +21,13 @@ class Profile extends Block<IUser> {
     AuthController.getUser()
 
     store.on(StoreEvents.Updated, () => {
-      props.avatar.setProps({
-        image: `https://ya-praktikum.tech/api/v2/resources${store.getState().user.avatar
-        }`,
-      })
-
-      this.props.data = store.getState().user
+      this.props.user = store.getState().user
+      if (store.getState().user.avatar !== null) {
+        props.avatar.setProps({
+          image: `https://ya-praktikum.tech/api/v2/resources${store.getState().user.avatar
+          }`,
+        })
+      }
     })
   }
 
@@ -41,4 +42,4 @@ class Profile extends Block<IUser> {
 
 const withProfile = connect(state => ({ user: state.user }))
 
-export default withProfile(Profile)
+export default Profile

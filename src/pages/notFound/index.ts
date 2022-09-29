@@ -5,7 +5,7 @@ const notFound = new NotFound({
   title: 'Страница не найдена',
   link: new Link({
     text: 'Вернуться на главную',
-    to: 'sign-up',
+    to: '/',
   }),
 })
 

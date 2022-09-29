@@ -14,10 +14,9 @@ class UserController {
   }
 
   public async update(data) {
-    await UserAPI.update(JSON.stringify(data))
+    await UserAPI.update(data)
       .then(res => res.response)
       .then(data => {
-        localStorage.setItem('user', data)
         const userData = JSON.parse(data)
         store.set('user', userData)
         Router.go('/settings')
@@ -28,7 +27,7 @@ class UserController {
   }
 
   public async updatePassword(data) {
-    await UserAPI.updatePassword(JSON.stringify(data))
+    await UserAPI.updatePassword(data)
       .then(res => {
         if (res.status === 200) {
           Router.go('/settings')
@@ -54,7 +53,7 @@ class UserController {
         }
       })
       .catch(err => {
-        console.log(err)
+        console.log('Аватар не изменен', err)
       })
   }
 }

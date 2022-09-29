@@ -14,13 +14,13 @@ import './scss/main.scss'
 
 document.addEventListener('DOMContentLoaded', () => {
   Router.use('/', login)
-    .use('/settings', profile)
     .use('/sign-up', register)
     .use('/messenger', chats)
-    .use('/500', serverError)
-    .use('*', notFound)
+    .use('/settings', profile)
     .use('/settings/change-data', changeData)
     .use('/settings/change-password', changePass)
     .use('/settings/change-avatar', changeAvatar)
+    .use('/500', serverError)
+    .use('*', notFound)
     .start()
 })

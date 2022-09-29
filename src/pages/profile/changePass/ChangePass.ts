@@ -15,6 +15,7 @@ export default class ChangePass extends Block<IChangePass> {
     return this.compile(template, {
       form: this.props.form,
       button: this.props.button,
+      linl: this.props.link,
     })
   }
 }

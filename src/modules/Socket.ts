@@ -11,16 +11,35 @@ export default class Socket {
     this._socket.addEventListener('open', () => {
       clearInterval(this._timeout)
       this.ping()
-
       this.getMessages()
     })
 
     this._socket.addEventListener('message', event => {
-      const messages = JSON.parse(event.data)
-      store.set('messages', messages)
+      const data = JSON.parse(event.data)
+
+      if (
+        data.type !== 'pong' &&
+        data.type !== 'user connected' &&
+        data.type !== 'user error'
+      ) {
+        if (Array.isArray(data)) {
+          data.forEach(message => {
+            if (message.user_id === store.getState().user.id) {
+              message.class = 'mine'
+            }
+          })
+          store.set('messages', data)
+        } else {
+          if (data.user_id === store.getState().user.id) {
+            data.class = 'mine'
+          }
+
+          store.set('messages', [data, ...store.getState().messages])
+        }
+      }
     })
 
-    /* socket.addEventListener('close', event => {
+    this._socket.addEventListener('close', event => {
       if (event.wasClean) {
         console.log('Соединение WebSocket закрыто пользователем')
       } else {
@@ -30,11 +49,9 @@ export default class Socket {
       console.log(`Код: ${event.code} | Причина: ${event}`)
     })
 
-
-
-    socket.addEventListener('error', event => {
+    this._socket.addEventListener('error', event => {
       console.log('Ошибка', event.message)
-    }) */
+    })
   }
 
   ping(): void {
@@ -44,7 +61,7 @@ export default class Socket {
           type: 'ping',
         })
       )
-    }, 20000)
+    }, 10000)
   }
 
   sendMessage(message: string): void {

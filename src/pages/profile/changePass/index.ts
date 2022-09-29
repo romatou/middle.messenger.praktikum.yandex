@@ -4,9 +4,13 @@ import Input from '../../../components/input/Input'
 import Button from '../../../components/button/Button'
 import { validateInput } from '../../../utils/validate'
 import UserController from '../../../controllers/UserController'
-import store, { StoreEvents } from '../../../modules/Store'
+import Link from '../../../components/link/Link'
 
 const changePass = new ChangePass({
+  link: new Link({
+    text: 'Назад в профиль',
+    to: '/settings',
+  }),
   form: new Form({
     fields: [
       new Input({

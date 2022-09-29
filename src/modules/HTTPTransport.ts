@@ -86,10 +86,7 @@ class HTTPTransport {
 
       if (!data) {
         xhr.send()
-      } else if (
-        options?.headers &&
-        options?.headers['content-type'] === 'application/json'
-      ) {
+      } else if (headers && headers['content-type'] === 'application/json') {
         xhr.send(JSON.stringify(data))
       } else {
         xhr.send(data)

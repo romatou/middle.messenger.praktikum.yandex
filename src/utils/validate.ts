@@ -33,6 +33,7 @@ const validateInput = (e: Event): void => {
 
 const validateSubmit = (data: Record<string, string>): boolean => {
   let isValid = false
+  const inputs = document.querySelectorAll('input')
 
   try {
     for (const [key, value] of Object.entries(data)) {
@@ -42,6 +43,10 @@ const validateSubmit = (data: Record<string, string>): boolean => {
         }
       } else {
         isValid = true
+
+        inputs.forEach(input => {
+          input.value = ''
+        })
       }
     }
 

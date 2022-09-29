@@ -52,14 +52,22 @@
     .dialog__messages {
       position: relative;
       width: 100%;
+      display: flex;
+      flex-direction: column-reverse;
 
       .message {
         padding: 1rem;
-        width: auto;
-        background: $bgColorDark;
+        width: 50%;
+        background: $bgChatMessage;
         border-radius: 12px;
         margin-bottom: 1rem;
         position: relative;
+
+        &.message_mine {
+          background: $bgMyChatMessages;
+          margin-left: auto;
+          right: 0;
+        }
 
         .message__text {
           margin: 0;

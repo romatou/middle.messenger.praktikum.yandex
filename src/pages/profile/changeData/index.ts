@@ -4,43 +4,40 @@ import Input from '../../../components/input/Input'
 import Button from '../../../components/button/Button'
 import { validateInput } from '../../../utils/validate'
 import UserController from '../../../controllers/UserController'
-import store, { StoreEvents } from '../../../modules/Store'
 
-const user = localStorage.getItem('user')
-const userData = JSON.parse(user)
+import Link from '../../../components/link/Link'
 
 const changeData = new ChangeData({
+  link: new Link({
+    text: 'Назад в профиль',
+    to: '/settings',
+  }),
   form: new Form({
     fields: [
       new Input({
         name: 'login',
         label: 'Логин',
         type: 'text',
-        value: userData.login,
       }),
       new Input({
         name: 'first_name',
         label: 'Имя',
         type: 'text',
-        value: userData.first_name,
       }),
       new Input({
         name: 'second_name',
         label: 'Фамилия',
         type: 'text',
-        value: userData.second_name,
       }),
       new Input({
         name: 'email',
         label: 'Email',
         type: 'email',
-        value: userData.email,
       }),
       new Input({
         name: 'phone',
         label: 'Телефон',
         type: 'tel',
-        value: userData.phone,
       }),
       new Input({
         name: 'display_name',

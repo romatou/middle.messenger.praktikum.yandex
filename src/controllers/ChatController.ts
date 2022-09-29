@@ -13,7 +13,9 @@ class ChatController {
   public async requestChats() {
     await ChatAPI.requestChats()
       .then(res => JSON.parse(res.response))
-      .then(data => store.set('chats', data))
+      .then(data => {
+        store.set('chats', data)
+      })
       .catch(err => console.error(err))
   }
 
@@ -42,7 +44,7 @@ class ChatController {
           if (res.status === 200) {
             this.requestChats()
           } else {
-            throw Error
+            throw Error(res.response)
           }
         })
         .catch(err => {
@@ -101,7 +103,6 @@ class ChatController {
 
     if (isValid) {
       this._socket.sendMessage(message)
-      this._socket.getMessages()
     }
   }
 }

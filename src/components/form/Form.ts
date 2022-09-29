@@ -20,9 +20,8 @@ export default class Form extends Block<IForm> {
 
   addEvents(): void {
     const { events = {} } = this.props
-    const inputs = this.element.querySelectorAll('input')
-
-    inputs.forEach((item: IInput) => {
+    const inputs: HTMLInputElement = this.element?.querySelectorAll('input')
+    inputs.forEach((item: HTMLInputElement) => {
       Object.keys(events).forEach(eventName => {
         item.addEventListener(eventName, events[eventName])
       })

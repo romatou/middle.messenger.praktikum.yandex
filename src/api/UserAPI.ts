@@ -9,7 +9,6 @@ class UserAPI {
     data: Record<string, string>
   ): Promise<Response> {
     return HTTPTransport.put('/user/profile', {
-      headers: { 'Content-Type': 'application/json' },
       data: data,
     })
   }
@@ -26,8 +25,9 @@ class UserAPI {
     data: Record<string, string>
   ): Promise<Response> {
     return HTTPTransport.put('/user/profile/avatar', {
-      headers: {},
-      credentials: 'include',
+      headers: {
+        'Access-Control-Allow-Credentials': 'true',
+      },
       mode: 'cors',
       data: data,
     })

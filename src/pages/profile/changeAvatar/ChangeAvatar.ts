@@ -15,6 +15,7 @@ export default class ChangeAvatar extends Block<IChangeAvatar> {
     return this.compile(template, {
       form: this.props.form,
       button: this.props.button,
+      link: this.props.link,
     })
   }
 }

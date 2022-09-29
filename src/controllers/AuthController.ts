@@ -4,21 +4,18 @@ import Router from '../modules/Router'
 import store from '../modules/Store'
 import { validateSubmit } from '../utils/validate'
 import { LoginFormModel, RegisterFormModel } from '../types/FormModel'
+import ChatController from './ChatController'
 
 class AuthController {
   public async getUser() {
     await AuthAPI.getUser()
       .then((res: any): void => {
         if (res.status === 200) {
-          localStorage.setItem('user', res.response)
           const user = JSON.parse(res.response)
           store.set('user', user)
-
           if (window.location.pathname === '/') {
             Router.go('/messenger')
           }
-        } else {
-          throw Error(res.response)
         }
       })
       .catch(err => {
@@ -27,59 +24,46 @@ class AuthController {
   }
 
   public async request(data: LoginFormModel) {
-    try {
-      const isValid = validateSubmit(data)
+    const isValid = validateSubmit(data)
 
-      if (!isValid) {
-        throw new Error('Ошибка валидации')
-      }
+    if (!isValid) {
+      throw new Error('Ошибка валидации')
+    }
 
-      await AuthAPI.request(data).then(res => {
+    await AuthAPI.request(data)
+      .then(res => {
         if (res.status === 200) {
           this.getUser()
-          Router.go('/messenger')
-        } else if (res.status === 400) {
-          const response = JSON.parse(res.response)
-
-          if (res.reason == 'User already in system') {
-            Router.go('/messenger')
-          } else {
-            throw res.reason
-          }
         } else {
-          console.error(res.response)
+          const response = JSON.parse(res.response)
+          throw Error(response.reason)
         }
       })
-    } catch (err) {
-      console.log('Пользователь не авторизован по причине:', err)
-    }
+      .catch(err => {
+        console.error('Пользователь не авторизован по причине:', err)
+      })
   }
 
   public async create(data: RegisterFormModel) {
-    try {
-      const isValid = validateSubmit(data)
+    const isValid = validateSubmit(data)
 
-      if (!isValid) {
-        throw new Error('Ошибка валидации')
-      }
+    if (!isValid) {
+      throw new Error('Ошибка валидации')
+    }
 
-      const regData = await AuthAPI.create(JSON.stringify(data)).then(res => {
+    await AuthAPI.create(data)
+      .then(res => {
         if (res.status === 200) {
-          UserController.getUser()
-          return true
+          this.getUser()
+          ChatController.requestChats()
+          Router.go('/messenger')
         } else {
-          return res.response
+          throw Error(res.response)
         }
       })
-
-      if (regData) {
-        Router.go('/messenger')
-      } else {
-        throw Error
-      }
-    } catch (err) {
-      console.error('Пользователь не зарегистрирован по причине:', err)
-    }
+      .catch(err => {
+        console.error('Пользователь не зарегистрирован по причине:', err)
+      })
   }
 
   public async delete() {

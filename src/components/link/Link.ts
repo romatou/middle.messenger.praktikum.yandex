@@ -3,9 +3,10 @@ import template from './link.hbs'
 import Router from '../../modules/Router'
 import './Link.css'
 
-interface ILink {
+export interface ILink {
   text: string
   to: string
+  page?: typeof Block
   events?: {
     click?: () => void
   }
@@ -18,6 +19,7 @@ export default class Link extends Block<ILink> {
       to: props.to,
       events: {
         click: () => {
+          Router.use(props.to, props.page)
           Router.go(props.to)
         },
       },

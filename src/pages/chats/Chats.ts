@@ -3,12 +3,9 @@ import template from './template.hbs'
 import store, { StoreEvents } from '../../modules/Store'
 import ChatController from '../../controllers/ChatController'
 import './Chats.scss'
-import Dialog from './dialog/Dialog'
-import messageData from '../../data/chat'
 import Form from '../../components/form/Form'
 import Input from '../../components/input/Input'
 import Button from '../../components/button/Button'
-import { validateSubmit } from '../../utils/validate'
 import Modal from '../../components/modal/Modal'
 import Dialog from './dialog/Dialog'
 import renderDOM from '../../modules/renderDOM'
@@ -32,6 +29,10 @@ class Chats extends Block<IChat> {
   constructor(props: IChat) {
     super('section', props)
     ChatController.requestChats()
+
+    store.on(StoreEvents.Updated, () => {
+      props.chats = store.getState().chats
+    })
   }
 
   protected addEvents(): void {
@@ -169,6 +170,7 @@ class Chats extends Block<IChat> {
           },
         }),
       ],
+      messages: '',
       form: new Form({
         fields: [
           new Input({
@@ -206,6 +208,8 @@ class Chats extends Block<IChat> {
   }
 }
 
-const withChats = connect(state => ({ chats: state.chats }))
+const withChats = connect(state => ({
+  chats: state.chats,
+}))
 
 export default withChats(Chats)
