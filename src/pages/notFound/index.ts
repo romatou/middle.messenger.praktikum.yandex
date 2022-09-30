@@ -1,13 +1,12 @@
-import PageNotFound from './NotFound'
+import NotFound from './NotFound'
+import Link from '../../components/link/Link'
 
-export const pageNotFound = new PageNotFound({
+const notFound = new NotFound({
   title: 'Страница не найдена',
-  link: '/',
-  linkText: 'Вернуться на главную'
+  link: new Link({
+    text: 'Вернуться на главную',
+    to: '/',
+  }),
 })
-// const PageNotFound = template({
-// 	h2: 'Вы потерялись. Попробуйте поискать другую тропинку',
-// 	linkText: 'Вернуться назад',
-// 	link: '/',
-// 	container: 'page-not-found',
-// })
+
+export default notFound

@@ -1,40 +1,49 @@
-import Block from '../../core/Block'
+import Block from '../../modules/Block'
 import template from './template.hbs'
+import IInput from '../input/Input'
+import IButton from '../button/Button'
 
-interface FormProps {
-  fields: HTMLElement[]
-  button: HTMLElement
+export interface IForm {
+  fields: IInput[]
+  button: IButton
   events?: {
-    focus?: (e: Event) => void
-    blur?: (e: Event) => void
-    submit?: (e: Event) => void
+    focus: (e: Event) => void
+    blur: (e: Event) => void
+    submit: (e: Event) => void
   }
 }
 
-export default class Form extends Block<FormProps> {
-  constructor(props: FormProps) {
+export default class Form extends Block<IForm> {
+  constructor(props: IForm) {
     super('div', props)
   }
 
-  addEvents() {
+  addEvents(): void {
     const { events = {} } = this.props
-    const inputs = this.element!.querySelectorAll('input')
-
-    inputs.forEach(item => {
+    const inputs: HTMLInputElement = this.element?.querySelectorAll('input')
+    inputs.forEach((item: HTMLInputElement) => {
       Object.keys(events).forEach(eventName => {
         item.addEventListener(eventName, events[eventName])
       })
+    })
+
+    Object.keys(events).forEach(eventName => {
+      this.element.addEventListener(eventName, events[eventName])
     })
   }
 
   removeEvents() {
     const { events = {} } = this.props
-    const inputs = this.element!.querySelectorAll('input')
+    const inputs = this.element.querySelectorAll('input')
 
     inputs.forEach(item => {
       Object.keys(events).forEach(eventName => {
         item.removeEventListener(eventName, events[eventName])
       })
+    })
+
+    Object.keys(events).forEach(eventName => {
+      this.element.addEventListener(eventName, events[eventName])
     })
   }
 

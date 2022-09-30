@@ -1,4 +1,4 @@
-import Block from '../../core/Block'
+import Block from '../../modules/Block'
 import template from './template.hbs'
 
 interface AvatarProps {

@@ -1,20 +1,35 @@
-import Block from '../../core/Block'
+import Block from '../../modules/Block'
 import template from './link.hbs'
+import Router from '../../modules/Router'
 import './Link.css'
 
-interface LinkProps {
-  url?: string
+export interface ILink {
   text: string
+  to: string
+  page?: typeof Block
   events?: {
-    click: (e: Event) => void
+    click?: () => void
   }
 }
 
-export default class Link extends Block<LinkProps> {
-  render () {
+export default class Link extends Block<ILink> {
+  constructor(props: ILink) {
+    super('div', {
+      text: props.text,
+      to: props.to,
+      events: {
+        click: () => {
+          Router.use(props.to, props.page)
+          Router.go(props.to)
+        },
+      },
+    })
+  }
+
+  render() {
     return this.compile(template, {
-      url: this.props.url,
-      text: this.props.text
+      text: this.props.text,
+      to: this.props.to,
     })
   }
 }

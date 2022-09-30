@@ -1,10 +1,10 @@
-import Block from '../../core/Block'
+import Block from '../../modules/Block'
 import template from './template.hbs'
 import './Button.scss'
 
-interface IButton {
+export interface IButton {
   label: string
-  inputType: string
+  type: string
   events?: {
     click?: (e: Event) => void
     submit?: (e: Event) => void
@@ -12,14 +12,14 @@ interface IButton {
 }
 
 export default class Button extends Block<IButton> {
-  constructor (props: IButton) {
+  constructor(props: IButton) {
     super('div', props)
   }
 
-  render (): HTMLElement {
+  render() {
     return this.compile(template, {
       label: this.props.label,
-      inputType: this.props.type
+      type: this.props.type,
     })
   }
 }
