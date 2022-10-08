@@ -8,10 +8,13 @@ interface IUser {
   logout: unknown
   link: unknown
   changeData: any
+  changePass: any
+  changeAvatar: any
   avatar: any
-  form: object
-  events: {
-    submit?: (e: any) => void
+  form: any
+  button: any
+  events?: {
+    submit: (e: any) => void
   }
 }
 
@@ -42,4 +45,4 @@ class Profile extends Block<IUser> {
 
 const withProfile = connect(state => ({ user: state.user }))
 
-export default Profile
+export default withProfile(Profile)

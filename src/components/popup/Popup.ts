@@ -7,7 +7,7 @@ interface IPopup {
 }
 
 export default class Popup extends Block<IPopup> {
-  constructor(props: IModal) {
+  constructor(props: IPopup) {
     super('div', props)
   }
 

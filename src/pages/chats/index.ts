@@ -22,12 +22,13 @@ const chats = new Chats({
     label: 'Добавить чат',
     type: 'button',
     events: {
-      click: (e: Event) => {
+      click: () => {
         const addChatModal = new Modal({
           content: new Form({
             fields: [
               new Input({
                 name: 'title',
+                type: 'text',
               }),
             ],
             button: new Button({
@@ -35,11 +36,14 @@ const chats = new Chats({
               type: 'submit',
             }),
             events: {
-              submit: (e: Event) => {
+              submit: e => {
                 e.preventDefault()
-                const formData = new FormData(e.target)
-                const queryData = {}
-                formData.forEach((value, key) => (queryData[key] = value))
+                const data: unknown = e.target
+                const formData = new FormData(data as HTMLFormElement)
+                const queryData: Record<string, any> = {}
+                formData.forEach((value, key) => {
+                  queryData[key] = value
+                })
                 ChatController.createChat(queryData)
               },
             },
@@ -47,7 +51,7 @@ const chats = new Chats({
         })
 
         const root = document.querySelector('.app')
-        root.appendChild(addChatModal.getContent())
+        root?.appendChild((addChatModal as any).getContent())
       },
     },
   }),

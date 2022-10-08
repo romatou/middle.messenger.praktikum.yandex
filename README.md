@@ -1,5 +1,6 @@
-
 [![Netlify Status](https://api.netlify.com/api/v1/badges/55a263f4-bfea-4b71-83f0-d422089db859/deploy-status)](https://app.netlify.com/sites/charming-marshmallow-76f3f5/deploys)
+
+[![Heroku](https://heroku-badge.herokuapp.com/?app=heroku-badge)]
 
 ## Описание
 
@@ -33,21 +34,30 @@
 Подключен API для авторизации, регистрации, списка чатов и профиля.
 Настроен роутинг.
 
+### Спринт 4
+
+Период с 26.09 по 15.10.2022
+
+Добавлен тестинг, Parcel заменен на Webpack, создан Dockerfile для контейнеризации приложения и выгрузки на Heroku.
+
 ## Используемые технологии
 
 1. Node v16 + Express
 2. Handlebars
-3. Parcel + Parcel Transformer HBS
+3. Webpack (а также webpack-cli и webpack-dev-server)
 4. ESLint, StyleLint а также плагины: **stylelint-scss**, **typescript-eslint**. Правила наследованы от инструкций [Google](https://github.com/google/eslint-config-google), а также [Prettier](https://github.com/prettier/stylelint-config-prettier) для устранения конфликтов с дополнением IDE Prettier.
-5. UUID
+5. UUID для создания рандомных ID компонентам.
+6. Husky для контроля коммитов. Запускает проверку линтинга и тестов перед коммитом.
+7. Mocha и Chai для проведения тестов сборки.
+8. Docker для контейнеризации приложения и дальнейшей выгрузки на Heroku.
 
 ## Установка
 
-`npm run dev` - запуск версии для разработчика на порту `1234`
+`npm run dev` - запуск версии для разработчика на порту `3000`
 
 `npm run build` - сборка стабильной версии проекта
 
-`npm run start` - запуск Node на порту `3000`
+`npm run start` - сборка проекта и запуск Node на порту `3000`
 
 `npm run lint` - вывод ошибок
 
@@ -60,3 +70,5 @@
 Макеты: [Figma](https://www.figma.com/file/IZNg4gYpnw1PjPAJbxXlKZ/ChatScript)
 
 Ссылка на рабочий проект: [Netlify](https://charming-marshmallow-76f3f5.netlify.app)
+
+Ссыла на рабочий проект: [Heroku](https://chatscript.herokuapp.com)

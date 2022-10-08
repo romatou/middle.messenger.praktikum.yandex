@@ -4,7 +4,7 @@ import Link from '../../components/link/Link'
 import Avatar from '../../components/avatar/Avatar'
 import './profile.scss'
 import AuthController from '../../controllers/AuthController'
-import ProfileDummy from '../../../static/images/user.png'
+import ProfileDummy from '../../assets/images/user.png'
 
 const profile = new Profile({
   logout: new Button({
@@ -16,15 +16,15 @@ const profile = new Profile({
       },
     },
   }),
-  changeData: new Link({
+  dataChange: new Link({
     text: 'Изменить данные',
     to: '/settings/change-data',
   }),
-  changePass: new Link({
+  passChange: new Link({
     text: 'Изменить пароль',
     to: '/settings/change-password',
   }),
-  changeAvatar: new Link({
+  avatarChange: new Link({
     text: 'Изменить аватар',
     to: '/settings/change-avatar',
   }),

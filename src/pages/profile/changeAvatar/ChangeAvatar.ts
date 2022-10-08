@@ -2,8 +2,8 @@ import Block from '../../../modules/Block'
 import template from './template.hbs'
 
 interface IChangeAvatar {
-  form: HTMLFormElement
-  button: HTMLButtonElement
+  form: any
+  link: any
 }
 
 export default class ChangeAvatar extends Block<IChangeAvatar> {

@@ -55,10 +55,11 @@ const changeData = new ChangeData({
       blur: (e: Event): void => {
         validateInput(e)
       },
-      submit: (e: Event): void => {
+      submit: (e): void => {
         e.preventDefault()
-        const formData = new FormData(e.target)
-        const queryData = {}
+        const data: unknown = e.target
+        const formData = new FormData(data as HTMLFormElement)
+        const queryData: Record<string, any> = {}
         formData.forEach((value, key) => (queryData[key] = value))
         UserController.update(queryData)
       },

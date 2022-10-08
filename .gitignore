@@ -1,5 +1,6 @@
 # IDE config
 /.nova
+/.idea
 
 # OS files
 .DS_Store
@@ -9,3 +10,4 @@
 
 # Package files and folders
 /.parcel-cache
+/.env

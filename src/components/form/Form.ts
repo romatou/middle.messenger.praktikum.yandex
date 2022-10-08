@@ -3,13 +3,13 @@ import template from './template.hbs'
 import IInput from '../input/Input'
 import IButton from '../button/Button'
 
-export interface IForm {
+export type IForm = {
   fields: IInput[]
   button: IButton
-  events?: {
-    focus: (e: Event) => void
-    blur: (e: Event) => void
-    submit: (e: Event) => void
+  events: {
+    focus?: (e: Event) => void
+    blur?: (e: Event) => void
+    submit: (e: any) => void
   }
 }
 
@@ -18,32 +18,34 @@ export default class Form extends Block<IForm> {
     super('div', props)
   }
 
+  // public submit(e: Event) { }
+
   addEvents(): void {
     const { events = {} } = this.props
-    const inputs: HTMLInputElement = this.element?.querySelectorAll('input')
-    inputs.forEach((item: HTMLInputElement) => {
+    const inputs: any = this.element?.querySelectorAll('input')
+    inputs.forEach((item: any) => {
       Object.keys(events).forEach(eventName => {
         item.addEventListener(eventName, events[eventName])
       })
     })
 
     Object.keys(events).forEach(eventName => {
-      this.element.addEventListener(eventName, events[eventName])
+      this.element?.addEventListener(eventName, events[eventName])
     })
   }
 
   removeEvents() {
     const { events = {} } = this.props
-    const inputs = this.element.querySelectorAll('input')
+    const inputs = this.element?.querySelectorAll('input')
 
-    inputs.forEach(item => {
+    inputs?.forEach(item => {
       Object.keys(events).forEach(eventName => {
         item.removeEventListener(eventName, events[eventName])
       })
     })
 
     Object.keys(events).forEach(eventName => {
-      this.element.addEventListener(eventName, events[eventName])
+      this.element?.addEventListener(eventName, events[eventName])
     })
   }
 

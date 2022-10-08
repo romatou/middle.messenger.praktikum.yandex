@@ -5,7 +5,7 @@ import './Icon.scss'
 export interface IIcon {
   image: string
   className: string
-  title: string
+  title?: string
   events?: {
     click: (e: Event) => void
   }

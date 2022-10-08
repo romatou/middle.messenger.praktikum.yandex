@@ -6,10 +6,10 @@ import { IIcon } from '../../../components/icon/Icon'
 import store, { StoreEvents } from '../../../modules/Store'
 import connect from '../../../modules/connect'
 
-interface DialogProps {
-  title: string
+export interface DialogProps {
   id: number
-  menu: IIcon
+  title: string
+  menu: IIcon[]
   avatar: object
   messages: object
   form: object
@@ -32,16 +32,15 @@ class Dialog extends Block<DialogProps> {
     const { events = {} } = this.props
 
     Object.keys(events).forEach(eventName => {
-      this._element.addEventListener(eventName, events[eventName])
+      this.element?.addEventListener(eventName, events[eventName])
     })
 
     const dialogWindow = document.querySelector('.dialog__main')
-    const messages = document.querySelector('.dialog__messages')
+    const messages: HTMLElement | null =
+      document.querySelector('.dialog__messages')
 
     if (dialogWindow) {
-      //console.log(dialogWindow.scrollTo(0, dialogWindow.scrollHeight))
-
-      dialogWindow.scroll(0, messages?.scrollHeight)
+      dialogWindow.scroll(0, (messages as HTMLElement).scrollHeight)
     }
   }
 
