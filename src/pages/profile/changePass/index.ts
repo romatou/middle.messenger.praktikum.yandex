@@ -37,8 +37,9 @@ const changePass = new ChangePass({
       },
       submit: (e: Event) => {
         e.preventDefault()
-        const formData = new FormData(e.target)
-        const queryData = {}
+        const data: unknown = e.target
+        const formData = new FormData(data as HTMLFormElement)
+        const queryData: Record<string, any> = {}
         formData.forEach((value, key) => (queryData[key] = value))
         UserController.updatePassword(queryData)
       },

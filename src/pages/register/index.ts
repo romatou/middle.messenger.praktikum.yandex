@@ -3,8 +3,9 @@ import Form from '../../components/form/Form'
 import Button from '../../components/button/Button'
 import Input from '../../components/input/Input'
 import Link from '../../components/link/Link'
-import { validateInput, validateSubmit } from '../../utils/validate'
+import { validateInput } from '../../utils/validate'
 import AuthController from '../../controllers/AuthController'
+import { RegisterFormModel } from '../../types/FormModel'
 
 const register = new Register({
   title: 'Войти',
@@ -56,10 +57,11 @@ const register = new Register({
       },
       submit: (e: Event) => {
         e.preventDefault()
-        const formData = new FormData(e.target)
-        const queryData = {}
+        const data: unknown = e.target
+        const formData = new FormData(data as HTMLFormElement)
+        const queryData: Record<string, any> = {}
         formData.forEach((value, key) => (queryData[key] = value))
-        AuthController.create(queryData)
+        AuthController.create(queryData as RegisterFormModel)
       },
     },
     button: new Button({

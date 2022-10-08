@@ -1,4 +1,4 @@
-const REGEXP = {
+const REGEXP: any = {
   login: {
     message: 'Логин может начинаться только с буквы',
     title: 'Логин',

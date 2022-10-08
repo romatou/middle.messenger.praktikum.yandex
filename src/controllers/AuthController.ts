@@ -16,9 +16,11 @@ class AuthController {
           if (window.location.pathname === '/') {
             Router.go('/messenger')
           }
+        } else {
+          throw new Error()
         }
       })
-      .catch(err => {
+      .catch((err: Error) => {
         console.error(err)
       })
   }
@@ -26,22 +28,22 @@ class AuthController {
   public async request(data: LoginFormModel) {
     const isValid = validateSubmit(data)
 
-    if (!isValid) {
-      throw new Error('Ошибка валидации')
+    if (isValid) {
+      await AuthAPI.request(data)
+        .then((res: any): void | never => {
+          if (res.status === 200) {
+            this.getUser()
+          } else {
+            const response = JSON.parse(res.response)
+            throw Error(response.reason)
+          }
+        })
+        .catch((err: Error) => {
+          console.error('Пользователь не авторизован по причине:', err)
+        })
     }
 
-    await AuthAPI.request(data)
-      .then(res => {
-        if (res.status === 200) {
-          this.getUser()
-        } else {
-          const response = JSON.parse(res.response)
-          throw Error(response.reason)
-        }
-      })
-      .catch(err => {
-        console.error('Пользователь не авторизован по причине:', err)
-      })
+    throw new Error('Ошибка валидации')
   }
 
   public async create(data: RegisterFormModel) {
@@ -52,7 +54,7 @@ class AuthController {
     }
 
     await AuthAPI.create(data)
-      .then(res => {
+      .then((res: any): void | Error => {
         if (res.status === 200) {
           this.getUser()
           ChatController.requestChats()
@@ -61,13 +63,13 @@ class AuthController {
           throw Error(res.response)
         }
       })
-      .catch(err => {
+      .catch((err: Error) => {
         console.error('Пользователь не зарегистрирован по причине:', err)
       })
   }
 
   public async delete() {
-    return await AuthAPI.delete().then(res => {
+    return await AuthAPI.delete().then((): void => {
       Router.go('/')
     })
   }

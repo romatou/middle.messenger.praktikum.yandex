@@ -10,10 +10,10 @@ import Modal from '../../components/modal/Modal'
 import Dialog from './dialog/Dialog'
 import renderDOM from '../../modules/renderDOM'
 import Icon from '../../components/icon/Icon'
-import addUserImage from '/static/icons/add_user.png'
-import deleteUserImage from '/static/icons/delete_user.png'
-import deleteChatImage from '/static/icons/delete_chat.png'
 import connect from '../../modules/connect'
+import addUserImage from '../../assets/icons/add_user.png'
+import deleteUserImage from '../../assets/icons/delete_user.png'
+import deleteChatImage from '../../assets/icons/delete_chat.png'
 
 interface IChat {
   search: object
@@ -39,7 +39,7 @@ class Chats extends Block<IChat> {
     const chats = this.props.chats
 
     if (chats) {
-      chats.forEach(el => {
+      chats.forEach((el: HTMLElement) => {
         const item = document.getElementById(el.id)
         item?.addEventListener('click', () => {
           const activeChat = document.querySelector('.active')
@@ -56,7 +56,7 @@ class Chats extends Block<IChat> {
     }
   }
 
-  openDialog(chat) {
+  openDialog(chat: Record<string, any>): void {
     const dialog = new Dialog({
       title: `${chat.title} (ID чата: ${chat.id})`,
       id: chat.id,
@@ -65,7 +65,7 @@ class Chats extends Block<IChat> {
           className: 'add_user',
           image: addUserImage,
           events: {
-            click: e => {
+            click: () => {
               const modal = new Modal({
                 content: new Form({
                   fields: [
@@ -82,9 +82,9 @@ class Chats extends Block<IChat> {
                   events: {
                     submit: e => {
                       e.preventDefault()
-                      let userId = null
+                      let userId: string | number = 0
                       const formData = new FormData(e.target)
-                      formData.forEach(val => {
+                      formData.forEach((val: any): void => {
                         userId = parseInt(val)
                       })
                       ChatController.addUser(userId, chat.id)
@@ -94,7 +94,7 @@ class Chats extends Block<IChat> {
               })
 
               const root = document.querySelector('.app')
-              root.appendChild(modal.getContent())
+              root?.appendChild((modal as any).getContent())
             },
           },
         }),
@@ -102,7 +102,7 @@ class Chats extends Block<IChat> {
           className: 'delete_user',
           image: deleteUserImage,
           events: {
-            click: (e: Event) => {
+            click: () => {
               const modal = new Modal({
                 content: new Form({
                   fields: [
@@ -118,9 +118,9 @@ class Chats extends Block<IChat> {
                   events: {
                     submit: e => {
                       e.preventDefault()
-                      let users = null
+                      let users = 0
                       const formData = new FormData(e.target)
-                      formData.forEach(val => {
+                      formData.forEach((val: any) => {
                         users = parseInt(val)
                       })
                       ChatController.deleteUser(users, chat.id)
@@ -129,7 +129,7 @@ class Chats extends Block<IChat> {
                 }),
               })
               const root = document.querySelector('.app')
-              root.appendChild(modal.getContent())
+              root?.appendChild((modal as any).getContent())
             },
           },
         }),
@@ -137,7 +137,7 @@ class Chats extends Block<IChat> {
           className: 'delete_chat',
           image: deleteChatImage,
           events: {
-            click: e => {
+            click: () => {
               const modal = new Modal({
                 content: new Form({
                   fields: [
@@ -154,10 +154,10 @@ class Chats extends Block<IChat> {
                   events: {
                     submit: e => {
                       e.preventDefault()
-                      let chatId = null
+                      let chatId = 0
                       const formData = new FormData(e.target)
                       formData.forEach(val => {
-                        chatId = parseInt(val)
+                        chatId = parseInt(val as string)
                       })
                       ChatController.deleteChat(chatId)
                     },
@@ -165,7 +165,7 @@ class Chats extends Block<IChat> {
                 }),
               })
               const root = document.querySelector('.app')
-              root.appendChild(modal.getContent())
+              root?.appendChild((modal as any).getContent())
             },
           },
         }),
@@ -183,16 +183,19 @@ class Chats extends Block<IChat> {
           type: 'submit',
           label: 'Отправить',
         }),
-      }),
-      events: {
-        submit: (e: Event) => {
-          e.preventDefault()
-          const formData = new FormData(e.target)
-          const queryData = {}
-          formData.forEach((value, key) => (queryData[key] = value))
-          ChatController.sendMessage(queryData)
+        events: {
+          submit: (e: Event) => {
+            e.preventDefault()
+            const data: unknown = e.target
+            const formData = new FormData(data as HTMLFormElement)
+            const queryData: Record<string, any> = {}
+            formData.forEach((value, key) => {
+              queryData[key] = value
+            })
+            ChatController.sendMessage(queryData)
+          },
         },
-      },
+      }),
     })
 
     renderDOM('.chat__dialog', dialog)

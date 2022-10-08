@@ -12,16 +12,16 @@ class ChatController {
 
   public async requestChats() {
     await ChatAPI.requestChats()
-      .then(res => JSON.parse(res.response))
+      .then((res: any) => JSON.parse(res.response))
       .then(data => {
         store.set('chats', data)
       })
-      .catch(err => console.error(err))
+      .catch((err: Error) => console.error(err))
   }
 
-  public async createChat(data: any) {
+  public async createChat(data: Record<string, any>) {
     await ChatAPI.createChat(data)
-      .then(res => {
+      .then((res: any) => {
         if (res.status === 200) {
           this.requestChats()
           document.querySelector('.modal')?.remove()
@@ -30,15 +30,15 @@ class ChatController {
           throw Error(error.error)
         }
       })
-      .catch(err => {
+      .catch((err: Error) => {
         console.error(err)
       })
   }
 
-  public async deleteChat(chatId) {
+  public async deleteChat(chatId: number) {
     if (chatId) {
       await ChatAPI.deleteChat(chatId)
-        .then(res => {
+        .then((res: any) => {
           document.querySelector('.modal')?.remove()
 
           if (res.status === 200) {
@@ -53,43 +53,45 @@ class ChatController {
     }
   }
 
-  public async addUser(user, chat) {
+  public async addUser(user: number, chat: number) {
     await ChatAPI.addUser(user, chat)
-      .then(res => {
+      .then((res: any) => {
         if (res.status === 200) {
           document.querySelector('.modal')?.remove()
         } else {
           throw Error(res.response)
         }
       })
-      .catch(err => {
+      .catch((err: Error) => {
         console.log(err)
       })
   }
 
-  public async deleteUser(user, chatId) {
+  public async deleteUser(user: number, chatId: number) {
     await ChatAPI.deleteUser(user, chatId)
-      .then(res => {
+      .then((res: any) => {
         if (res.status === 200) {
           document.querySelector('.modal')?.remove()
         }
       })
-      .catch(err => {
+      .catch((err: Error) => {
         console.log(err)
       })
   }
 
-  public async connectToChat(id) {
+  public async connectToChat(id: number) {
     const userId = await ChatAPI.getChatUsers(id)
-      .then(res => JSON.parse(res.response))
-      .then(data => data.find(user => user.id === store.getState().user.id))
+      .then((res: any) => JSON.parse(res.response))
+      .then((data: any) =>
+        data.find((user: any) => user.id === store.getState().user.id)
+      )
       .then(user => user.id)
       .catch(err => {
-        console.err(err)
+        console.error(err)
       })
 
     const token = await ChatAPI.getChatToken(id)
-      .then(res => JSON.parse(res.response))
+      .then((res: any) => JSON.parse(res.response))
       .then(data => data.token)
       .catch(err => {
         console.log(err)
@@ -98,11 +100,11 @@ class ChatController {
     this._socket = new Socket(userId, id, token)
   }
 
-  public sendMessage(message) {
+  public sendMessage(message: any) {
     const isValid = validateSubmit(message)
 
     if (isValid) {
-      this._socket.sendMessage(message)
+      this._socket?.sendMessage(message)
     }
   }
 }

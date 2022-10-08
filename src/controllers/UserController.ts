@@ -5,7 +5,7 @@ import Router from '../modules/Router'
 class UserController {
   public async getUser() {
     await UserAPI.getUser()
-      .then(data => {
+      .then((data: any) => {
         store.set('user', data)
       })
       .catch(err => {
@@ -13,9 +13,9 @@ class UserController {
       })
   }
 
-  public async update(data) {
+  public async update(data: any) {
     await UserAPI.update(data)
-      .then(res => res.response)
+      .then((res: any) => res.response)
       .then(data => {
         const userData = JSON.parse(data)
         store.set('user', userData)
@@ -26,9 +26,9 @@ class UserController {
       })
   }
 
-  public async updatePassword(data) {
+  public async updatePassword(data: any) {
     await UserAPI.updatePassword(data)
-      .then(res => {
+      .then((res: any) => {
         if (res.status === 200) {
           Router.go('/settings')
         } else {
@@ -41,9 +41,9 @@ class UserController {
       })
   }
 
-  public async updateAvatar(data) {
+  public async updateAvatar(data: any) {
     await UserAPI.updateAvatar(data)
-      .then(res => {
+      .then((res: any) => {
         if (res.status === 200) {
           const newData = JSON.parse(res.response)
           store.set('user', newData)

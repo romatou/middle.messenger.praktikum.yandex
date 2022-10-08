@@ -2,8 +2,8 @@ import Block from '../../../modules/Block'
 import template from './template.hbs'
 
 interface IChangePass {
-  form: HTMLFormElement
-  button: HTMLButtonElement
+  link: any
+  form: any
 }
 
 export default class ChangePass extends Block<IChangePass> {

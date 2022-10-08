@@ -66,7 +66,7 @@ class HTTPTransport {
         return
       }
 
-      const xhr = new XMLHttpRequest()
+      const xhr: any = new XMLHttpRequest()
       xhr.open(method, url)
 
       Object.keys(headers).forEach(key => {
@@ -95,4 +95,4 @@ class HTTPTransport {
   }
 }
 
-export default new HTTPTransport()
+export default HTTPTransport

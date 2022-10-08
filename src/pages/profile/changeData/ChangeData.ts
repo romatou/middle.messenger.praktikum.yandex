@@ -13,7 +13,7 @@ class ChangeData extends Block<IChangeData> {
     super('section', props)
 
     store.on(StoreEvents.Updated, () => {
-      props.form.children.fields.forEach(el => {
+      props.form.children.fields.forEach((el: any) => {
         if (el.props.name === 'login') {
           el.setProps({
             value: store.getState().user.login,
