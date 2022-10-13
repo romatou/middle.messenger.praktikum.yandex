@@ -1,8 +1,8 @@
-@import "../../../scss/mixins.scss";
-@import "../../../scss/vars.scss";
+@import "../../../scss/mixins";
+@import "../../../scss/vars";
 
 .dialog {
-  color: $textColorLight;
+  color: $text-color-light;
   height: 100%;
   padding: 1rem;
   display: flex;
@@ -11,14 +11,14 @@
   justify-content: center;
   align-items: center;
 
-  .dialog__header {
+  .dialog-header {
     flex-grow: 0;
     display: flex;
     width: 100%;
     justify-content: space-between;
     margin-bottom: 2rem;
 
-    .dialog__title {
+    .dialog-title {
       display: flex;
       align-items: center;
 
@@ -27,7 +27,7 @@
       }
     }
 
-    .dialog__menu {
+    .dialog-menu {
       width: 33%;
       padding: 4px 0;
       display: flex;
@@ -36,20 +36,20 @@
     }
   }
 
-  .dialog__main {
+  .dialog-main {
     flex-grow: 2;
     width: 100%;
     height: 300px;
     overflow: scroll;
     position: relative;
 
-    .dialog__date {
+    .dialog-date {
       display: block;
       text-align: center;
       margin-bottom: 0.5rem;
     }
 
-    .dialog__messages {
+    .dialog-messages {
       position: relative;
       width: 100%;
       display: flex;
@@ -58,34 +58,34 @@
       .message {
         padding: 1rem;
         width: 50%;
-        background: $bgChatMessage;
+        background: $bg-chat-message;
         border-radius: 12px;
         margin-bottom: 1rem;
         position: relative;
 
-        &.message_mine {
-          background: $bgMyChatMessages;
+        &.message-mine {
+          background: $bg-my-chat-message;
           margin-left: auto;
           right: 0;
         }
 
-        .message__text {
+        .message-text {
           margin: 0;
           font-size: 14px;
         }
 
-        .message__time {
+        .message-time {
           text-align: right;
           display: block;
           margin-top: 1rem;
           font-size: 10px;
         }
 
-        &.message_contact {
+        &.message-contact {
           width: 50%;
         }
 
-        &.message_user {
+        &.message-user {
           width: 50%;
           margin-left: auto;
         }
@@ -93,7 +93,7 @@
     }
   }
 
-  .dialog__footer {
+  .dialog-footer {
     display: flex;
     align-items: center;
     width: 100%;
@@ -120,15 +120,15 @@
         margin: 0;
         margin-bottom: 0;
         margin-right: 0.5rem;
-        background: $bgColorBlack;
-        border: $borderStyle;
+        background: $bg-color-black;
+        border: $border-style;
         resize: none;
-        color: $textColorLight;
+        color: $text-color-light;
         padding: 4px 6px;
         font-size: 14px;
       }
 
-      .dialog__button {
+      .dialog-button {
         margin: 0;
         width: auto;
       }

@@ -2,19 +2,19 @@
 
 .server-error {
   .page__title {
-    color: $textColorGrey;
+    color: $text-color-grey;
     text-align: center;
     font-size: 3rem;
     margin: 0;
   }
 
   .page__paragraph {
-    color: $textColorGrey;
+    color: $text-color-grey;
     margin: 1rem 0;
   }
 
   .page__link {
-    color: $linkColor;
+    color: $link-color;
     text-decoration: none;
     text-align: center;
     display: block;

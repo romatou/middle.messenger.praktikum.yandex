@@ -11,91 +11,93 @@ class ChatController {
   }
 
   public async requestChats() {
-    await ChatAPI.requestChats()
-      .then((res: any) => JSON.parse(res.response))
-      .then(data => {
-        store.set('chats', data)
-      })
-      .catch((err: Error) => console.error(err))
+    try {
+      const response: XMLHttpRequest = await ChatAPI.requestChats()
+
+      const data = JSON.parse(response.response)
+      store.set('chats', data)
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   public async createChat(data: Record<string, any>) {
-    await ChatAPI.createChat(data)
-      .then((res: any) => {
-        if (res.status === 200) {
-          this.requestChats()
-          document.querySelector('.modal')?.remove()
-        } else {
-          const error = JSON.parse(res.response)
-          throw Error(error.error)
-        }
-      })
-      .catch((err: Error) => {
-        console.error(err)
-      })
+    try {
+      const response: XMLHttpRequest = await ChatAPI.createChat(data)
+      if (response.status === 200) {
+        this.requestChats()
+        document.querySelector('.modal')?.remove()
+      } else {
+        const error = JSON.parse(response.response)
+        throw Error(error.error)
+      }
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   public async deleteChat(chatId: number) {
-    if (chatId) {
-      await ChatAPI.deleteChat(chatId)
-        .then((res: any) => {
-          document.querySelector('.modal')?.remove()
+    try {
+      const response: XMLHttpRequest = await ChatAPI.deleteChat(chatId)
 
-          if (res.status === 200) {
-            this.requestChats()
-          } else {
-            throw Error(res.response)
-          }
-        })
-        .catch(err => {
-          console.error(`Причина: ${err}`)
-        })
+      if (response.status === 200) {
+        this.requestChats()
+      } else {
+        throw Error(response.response)
+      }
+      document.querySelector('.modal')?.remove()
+    } catch (err) {
+      console.error(`Причина: ${err}`)
     }
   }
 
   public async addUser(user: number, chat: number) {
-    await ChatAPI.addUser(user, chat)
-      .then((res: any) => {
-        if (res.status === 200) {
-          document.querySelector('.modal')?.remove()
-        } else {
-          throw Error(res.response)
-        }
-      })
-      .catch((err: Error) => {
-        console.log(err)
-      })
+    try {
+      const response: XMLHttpRequest = await ChatAPI.addUser(user, chat)
+
+      if (response.status === 200) {
+        document.querySelector('.modal')?.remove()
+      } else {
+        throw Error(response.response)
+      }
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   public async deleteUser(user: number, chatId: number) {
-    await ChatAPI.deleteUser(user, chatId)
-      .then((res: any) => {
-        if (res.status === 200) {
-          document.querySelector('.modal')?.remove()
-        }
-      })
-      .catch((err: Error) => {
-        console.log(err)
-      })
+    try {
+      const response: XMLHttpRequest = await ChatAPI.deleteUser(user, chatId)
+
+      if (response.status === 200) {
+        document.querySelector('.modal')?.remove()
+      }
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   public async connectToChat(id: number) {
-    const userId = await ChatAPI.getChatUsers(id)
-      .then((res: any) => JSON.parse(res.response))
-      .then((data: any) =>
-        data.find((user: any) => user.id === store.getState().user.id)
-      )
-      .then(user => user.id)
-      .catch(err => {
-        console.error(err)
-      })
+    let userId = 0
+    let token = ''
 
-    const token = await ChatAPI.getChatToken(id)
-      .then((res: any) => JSON.parse(res.response))
-      .then(data => data.token)
-      .catch(err => {
-        console.log(err)
-      })
+    const userIdRequest: XMLHttpRequest = await ChatAPI.getChatUsers(id)
+
+    if (userIdRequest) {
+      const response = JSON.parse(userIdRequest.response)
+
+      const currentUser = response.find(
+        (user: any) => user.id === store.getState().user.id
+      )
+      userId = currentUser.id
+    }
+
+    const tokenIdRequest: XMLHttpRequest = await ChatAPI.getChatToken(id)
+
+    if (tokenIdRequest) {
+      const response: Record<string, any> = JSON.parse(tokenIdRequest.response)
+      token = response.token
+    }
 
     this._socket = new Socket(userId, id, token)
   }

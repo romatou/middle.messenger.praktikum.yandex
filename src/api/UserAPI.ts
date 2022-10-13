@@ -1,29 +1,31 @@
 import HTTPTransport from '../modules/HTTPTransport'
-import { UpdateUserData, UpdateUserPassword } from '../types/FormModel'
-
-const xhr = new HTTPTransport()
+import { FormModel } from '../types/FormModel'
 
 class UserAPI {
-  public async getUser<Response>(): Promise<Response> {
-    return xhr.get('/auth/user')
+  private _xhr: HTTPTransport
+
+  constructor() {
+    this._xhr = new HTTPTransport()
   }
 
-  public async update<Response>(data: UpdateUserData): Promise<Response> {
-    return xhr.put('/user/profile', {
+  public async getUser<Response>(): Promise<Response> {
+    return this._xhr.get('/auth/user')
+  }
+
+  public async update<Response>(data: FormModel): Promise<Response> {
+    return this._xhr.put('/user/profile', {
       data: data,
     })
   }
 
-  public async updatePassword<Response>(
-    data: UpdateUserPassword
-  ): Promise<Response> {
-    return xhr.put('/user/password', {
+  public async updatePassword<Response>(data: FormModel): Promise<Response> {
+    return this._xhr.put('/user/password', {
       data: data,
     })
   }
 
   public async updateAvatar<Response>(data: FormData): Promise<Response> {
-    return xhr.put('/user/profile/avatar', {
+    return this._xhr.put('/user/profile/avatar', {
       headers: {
         'Access-Control-Allow-Credentials': 'true',
       },

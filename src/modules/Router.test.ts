@@ -4,7 +4,7 @@ import Router from './Router'
 import Block from '../modules/Block'
 
 interface BlockConstructable<P extends Record<string, any>> {
-  new(props: P): Block<P>
+  new(props: P): Block
 }
 
 describe('Router', () => {
@@ -25,8 +25,8 @@ describe('Router', () => {
     getContent = getContentFake
   } as unknown as BlockConstructable<any>
 
-  describe('Проверяем метод роутера use()', () => {
-    it('Должен возвращать экземпляр роутера', () => {
+  describe('check use() method', () => {
+    it('should return instance of router', () => {
       const result = Router.use('/', new BlockMock({}))
       expect(result).to.eq(Router)
     })

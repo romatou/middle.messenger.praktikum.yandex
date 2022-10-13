@@ -1,14 +1,9 @@
 declare module '*.hbs' {
-  const tpl: (param?: any) => string
+  const tpl: (param?: unknown) => string
   export default tpl
 }
 
-declare module '*.json' {
-  const value: any
-  export default value
-}
-
 declare module '*.png' {
-  const value: any
+  const value: string
   export default value
 }

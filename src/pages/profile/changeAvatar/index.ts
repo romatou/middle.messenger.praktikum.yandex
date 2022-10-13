@@ -25,7 +25,7 @@ const changeAvatar = new ChangeAvatar({
     events: {
       submit: e => {
         e.preventDefault()
-        const form = new FormData(e.target)
+        const form = new FormData(e.target as HTMLFormElement)
         UserController.updateAvatar(form)
       },
     },

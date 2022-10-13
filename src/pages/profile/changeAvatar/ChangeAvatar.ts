@@ -6,7 +6,7 @@ interface IChangeAvatar {
   link: any
 }
 
-export default class ChangeAvatar extends Block<IChangeAvatar> {
+export default class ChangeAvatar extends Block {
   constructor(props: IChangeAvatar) {
     super('section', props)
   }

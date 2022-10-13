@@ -6,7 +6,7 @@ interface AvatarProps {
   name?: string
 }
 
-export default class Avatar extends Block<AvatarProps> {
+export default class Avatar extends Block {
   constructor(props: AvatarProps) {
     super('div', props)
   }

@@ -5,8 +5,8 @@ const template = (props: any) => {
   return props
 }
 
-describe('Компонент Block', () => {
-  class ComponentMock extends Block<any> {
+describe('Component Block', () => {
+  class ComponentMock extends Block {
     constructor(props: any) {
       super('div', props)
     }
@@ -18,13 +18,13 @@ describe('Компонент Block', () => {
 
   const component = new ComponentMock({ props: 'Test' })
 
-  it('Метод getContent() возвращает строку', () => {
+  it('method getContent() should return a string', () => {
     const content = component.getContent()
 
     expect(content).to.be.not.a('string')
   })
 
-  it('Метод setProps() обновляет свойство компонента', () => {
+  it('method setProps() should update properties', () => {
     component.setProps({ props: 'new' })
     const result = component.props.props
     expect(result).to.be.equal('new')

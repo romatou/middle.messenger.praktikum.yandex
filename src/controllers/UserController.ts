@@ -1,60 +1,68 @@
 import UserAPI from '../api/UserAPI'
 import store from '../modules/Store'
 import Router from '../modules/Router'
+import { FormModel } from '../types/FormModel'
 
 class UserController {
   public async getUser() {
-    await UserAPI.getUser()
-      .then((data: any) => {
-        store.set('user', data)
-      })
-      .catch(err => {
-        console.error(err)
-      })
+    try {
+      const response: XMLHttpRequest = await UserAPI.getUser()
+
+      if (response.status === 200) {
+        const parsedData = JSON.parse(response.response)
+        store.set('user', parsedData)
+      } else {
+        throw Error(response.response)
+      }
+    } catch (err) {
+      console.error(err)
+    }
   }
 
-  public async update(data: any) {
-    await UserAPI.update(data)
-      .then((res: any) => res.response)
-      .then(data => {
-        const userData = JSON.parse(data)
+  public async update(data: FormModel) {
+    try {
+      const response: XMLHttpRequest = await UserAPI.update(data)
+
+      if (response.status === 200) {
+        const userData = JSON.parse(response.response)
         store.set('user', userData)
         Router.go('/settings')
-      })
-      .catch(err => {
-        console.log(err)
-      })
+      } else {
+        throw Error(response.response)
+      }
+    } catch (err) {
+      console.log(err)
+    }
   }
 
-  public async updatePassword(data: any) {
-    await UserAPI.updatePassword(data)
-      .then((res: any) => {
-        if (res.status === 200) {
-          Router.go('/settings')
-        } else {
-          console.log(res.reason)
-          return
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      })
+  public async updatePassword(data: FormModel) {
+    try {
+      const response: XMLHttpRequest = await UserAPI.updatePassword(data)
+
+      if (response.status === 200) {
+        Router.go('/settings')
+      } else {
+        throw Error(response.response)
+      }
+    } catch (err) {
+      console.log(err)
+    }
   }
 
-  public async updateAvatar(data: any) {
-    await UserAPI.updateAvatar(data)
-      .then((res: any) => {
-        if (res.status === 200) {
-          const newData = JSON.parse(res.response)
-          store.set('user', newData)
-          Router.go('/settings')
-        } else {
-          throw Error(res.response)
-        }
-      })
-      .catch(err => {
-        console.log('Аватар не изменен', err)
-      })
+  public async updateAvatar(data: FormData) {
+    try {
+      const response: XMLHttpRequest = await UserAPI.updateAvatar(data)
+
+      if (response.status === 200) {
+        const newData = JSON.parse(response.response)
+        store.set('user', newData)
+        Router.go('/settings')
+      } else {
+        throw Error(response.response)
+      }
+    } catch (err) {
+      console.log('Аватар не изменен', err)
+    }
   }
 }
 

@@ -1,4 +1,4 @@
-@mixin borderStyle($size, $radius) {
-	border: $size solid rgba(218, 218, 218, 0.5);
+@mixin border-style($size, $radius) {
+	border: $size solid rgb(218 218 218 / 50%);
 	border-radius: $radius;
 }

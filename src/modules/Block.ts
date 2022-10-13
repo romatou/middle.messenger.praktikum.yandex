@@ -1,7 +1,7 @@
 import EventBus from './EventBus'
 import { v4 as uuid } from 'uuid'
 
-abstract class Block<Props> {
+abstract class Block {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -10,14 +10,14 @@ abstract class Block<Props> {
   }
 
   private _element: Element | null = null
-  public eventBus: any = EventBus
+  public eventBus: any
   private readonly _meta: Record<string, any>
   private readonly _id: string
   public children: any
   public withInternalID = false
   public props: any
 
-  constructor(tagName = 'div', propsAndChildren?: Props) {
+  constructor(tagName = 'div', propsAndChildren?: any) {
     const { children, props } = this._getChildren(propsAndChildren)
     this.children = children
 

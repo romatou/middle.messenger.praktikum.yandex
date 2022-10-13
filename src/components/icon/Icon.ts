@@ -11,7 +11,7 @@ export interface IIcon {
   }
 }
 
-export default class Icon extends Block<IIcon> {
+export default class Icon extends Block {
   constructor(props: IIcon) {
     super('div', props)
   }

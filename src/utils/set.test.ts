@@ -1,8 +1,8 @@
 import { expect } from 'chai'
 import set from './set'
 
-describe('Тест функции Set', () => {
-  it('Оно должно установить значение по пути', () => {
+describe('Set', () => {
+  it('should set path', () => {
     const obj = {}
     const keypath = 'test'
     const value = 'some value'
@@ -12,7 +12,7 @@ describe('Тест функции Set', () => {
     expect(obj).to.haveOwnProperty(keypath, value)
   })
 
-  it('Должен вернуть исходный объект', () => {
+  it('should return original instance', () => {
     const obj = {}
     const keypath = 'test'
     const value = 'some value'

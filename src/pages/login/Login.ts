@@ -10,7 +10,7 @@ interface LoginProps {
   link: Link
 }
 
-export default class Login extends Block<LoginProps> {
+export default class Login extends Block {
   constructor(props: LoginProps) {
     super('section', props)
     AuthController.getUser()

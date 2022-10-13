@@ -11,7 +11,7 @@ export interface ILink {
   }
 }
 
-export default class Link extends Block<ILink> {
+export default class Link extends Block {
   constructor(props: ILink) {
     super('div', {
       text: props.text,

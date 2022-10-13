@@ -9,7 +9,7 @@ export interface IModal {
   icon?: Record<string, any>
 }
 
-export default class Modal extends Block<IModal> {
+export default class Modal extends Block {
   constructor(props: IModal) {
     super('div', {
       ...props,

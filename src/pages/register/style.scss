@@ -16,18 +16,18 @@
 
 .title {
   .page__title {
-    color: $textColorLight;
+    color: $text-color-light;
     margin: 0;
   }
 
   .page__paragraph {
-    color: $textColorDark;
+    color: $text-color-dark;
     margin: 0;
   }
 }
 
 .page__title {
-  color: $textColorLight;
+  color: $text-color-light;
   text-align: center;
   text-transform: uppercase;
   font-size: 1.25rem;
@@ -47,7 +47,7 @@
 .page__link {
   text-align: center;
   text-decoration: none;
-  color: $textColorLight;
+  color: $text-color-light;
   position: absolute;
   left: 0;
   right: 0;

@@ -1,5 +1,6 @@
 import { BASE_WEBSOCKET } from '../consts/BASE_URL'
 import store from '../modules/Store'
+import { FormModel } from '../types/FormModel'
 
 export default class Socket {
   private _socket: WebSocket | null
@@ -48,7 +49,7 @@ export default class Socket {
     })
 
     this._socket.addEventListener('error', event => {
-      console.error('Ошибка', (event as any).message)
+      console.error('Ошибка', (event as ErrorEvent).message)
     })
   }
 
@@ -62,7 +63,7 @@ export default class Socket {
     }, 10000)
   }
 
-  sendMessage(text: any): any {
+  sendMessage(text: FormModel) {
     return this._socket?.send(
       JSON.stringify({
         content: text.message,

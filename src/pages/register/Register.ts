@@ -13,7 +13,7 @@ interface IPage {
   }
 }
 
-export default class Register extends Block<IPage> {
+export default class Register extends Block {
   constructor(props: IPage) {
     super('section', props)
   }

@@ -14,18 +14,19 @@ import connect from '../../modules/connect'
 import addUserImage from '../../assets/icons/add_user.png'
 import deleteUserImage from '../../assets/icons/delete_user.png'
 import deleteChatImage from '../../assets/icons/delete_chat.png'
+import Link from '../../components/link/Link'
 
 interface IChat {
-  search: object
-  chats?: object
-  link?: any
+  search: Input
+  chats?: HTMLElement[]
+  profileLink: Link
   events: {
     submit?: (e: Event) => void
     click?: (e: Event) => void
   }
 }
 
-class Chats extends Block<IChat> {
+class Chats extends Block {
   constructor(props: IChat) {
     super('section', props)
     ChatController.requestChats()
@@ -80,13 +81,16 @@ class Chats extends Block<IChat> {
                     type: 'submit',
                   }),
                   events: {
-                    submit: e => {
+                    submit: (e: Event) => {
                       e.preventDefault()
                       let userId: string | number = 0
-                      const formData = new FormData(e.target)
+
+                      const formData = new FormData()
+
                       formData.forEach((val: any): void => {
                         userId = parseInt(val)
                       })
+
                       ChatController.addUser(userId, chat.id)
                     },
                   },
@@ -119,7 +123,7 @@ class Chats extends Block<IChat> {
                     submit: e => {
                       e.preventDefault()
                       let users = 0
-                      const formData = new FormData(e.target)
+                      const formData = new FormData(e.target as HTMLFormElement)
                       formData.forEach((val: any) => {
                         users = parseInt(val)
                       })
@@ -155,7 +159,7 @@ class Chats extends Block<IChat> {
                     submit: e => {
                       e.preventDefault()
                       let chatId = 0
-                      const formData = new FormData(e.target)
+                      const formData = new FormData(e.target as HTMLFormElement)
                       formData.forEach(val => {
                         chatId = parseInt(val as string)
                       })
@@ -170,7 +174,6 @@ class Chats extends Block<IChat> {
           },
         }),
       ],
-      messages: '',
       form: new Form({
         fields: [
           new Input({

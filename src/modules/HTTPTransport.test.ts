@@ -24,13 +24,13 @@ describe('HTTPTransport', () => {
     requests.length = 0
   })
 
-  it('Проверяем метод get()', () => {
+  it('check get() method', () => {
     instance
       .get(`https://ya-praktikum.tech/api/v2/user/419`)
       .then(response => expect(response).to.have.property('id').and.equal(419))
   })
 
-  it('Проверяем метод post()', () => {
+  it('check post() method', () => {
     instance
       .post(`https://ya-praktikum.tech/api/v2/user/search`, {
         headers: { 'content-type': 'application/json' },

@@ -11,13 +11,13 @@
   align-items: center;
 
   .link {
-    border: 1px solid $bgColorLight;
+    border: 1px solid $bg-color-light;
     padding: 1rem;
     border-radius: 1rem;
     width: 48px;
 
     &:hover {
-      background: $bgColorLight;
+      background: $bg-color-light;
       opacity: 0.5;
       color: #000;
       cursor: pointer;
@@ -44,7 +44,7 @@ a {
   .list {
     line-height: 2;
     margin-bottom: 4rem;
-    color: $textColorLight;
+    color: $text-color-light;
     display: grid;
     grid-template-columns: repeat(2, auto);
     flex-wrap: wrap;
@@ -64,8 +64,8 @@ a {
 
 .profile__sidebar-link {
   text-decoration: none;
-  color: $textColorLight;
-  border: 1px solid $borderLight;
+  color: $text-color-light;
+  border: 1px solid $border-light;
   border-radius: 8px;
   padding: 0.25rem 0.5rem;
 
@@ -76,7 +76,7 @@ a {
 }
 
 .avatar {
-  @include borderStyle(2px, 50%);
+  @include border-style(2px, 50%);
 
   width: 48px;
   display: flex;
@@ -94,7 +94,7 @@ a {
 }
 
 .name {
-  color: $textColorLight;
+  color: $text-color-light;
   text-align: center;
   font-weight: 500;
 }
@@ -102,7 +102,7 @@ a {
 .links {
   a {
     display: block;
-    color: $textColorLight;
+    color: $text-color-light;
     text-decoration: none;
   }
 

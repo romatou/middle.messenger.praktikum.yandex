@@ -1,33 +1,18 @@
 import REGEXP from '../consts/REGEXP'
 
 const validateInput = (e: Event): void => {
-  const item: HTMLInputElement = e.target as HTMLInputElement
+  const item = e.target as HTMLInputElement
   const expression = REGEXP[item.name].expression
-  const check = expression.test(item.value)
-  const parent: any = item.parentElement
-  const input: HTMLInputElement | null = parent.querySelector('input')
-  const inputCount: number = parent.childElementCount
+  const isValid = expression.test(item.value)
+  const parent: HTMLElement | null = item.parentElement
+  const message = REGEXP[item.name].message
 
-  if (input?.name === item.name) {
-    if (!check) {
-      item.classList.add('input_error')
-      if (inputCount && inputCount < 3) {
-        parent.append(addTooltip(REGEXP[item.name].message))
-      }
-    } else {
-      item.classList.remove('input_error')
-      if (inputCount && inputCount >= 3) {
-        parent.lastChild?.remove()
-      }
-    }
-    if (e.type === 'blur' && item.value.length === 0) {
-      setTimeout(() => {
-        item.classList.remove('input_error')
-      }, 200)
-      if (inputCount && inputCount >= 3) {
-        parent.lastChild?.remove()
-      }
-    }
+  if (!isValid) {
+    item.classList.add('input_error')
+    parent?.append(addTooltip(message))
+  } else {
+    item.classList.remove('input_error')
+    parent?.querySelector('.tooltip')?.remove()
   }
 }
 

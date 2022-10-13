@@ -9,21 +9,20 @@ export type IForm = {
   events: {
     focus?: (e: Event) => void
     blur?: (e: Event) => void
-    submit: (e: any) => void
+    submit: (e: Event) => void
   }
 }
 
-export default class Form extends Block<IForm> {
+export default class Form extends Block {
   constructor(props: IForm) {
     super('div', props)
   }
 
-  // public submit(e: Event) { }
-
   addEvents(): void {
     const { events = {} } = this.props
-    const inputs: any = this.element?.querySelectorAll('input')
-    inputs.forEach((item: any) => {
+    const inputs: NodeListOf<HTMLInputElement> | undefined =
+      this.element?.querySelectorAll<HTMLInputElement>('input')
+    inputs?.forEach((item: HTMLInputElement) => {
       Object.keys(events).forEach(eventName => {
         item.addEventListener(eventName, events[eventName])
       })

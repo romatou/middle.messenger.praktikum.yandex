@@ -1,18 +1,30 @@
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
+
+const dev = process.env.NODE_ENV !== 'production'
 
 module.exports = {
   context: path.resolve(__dirname, 'src'),
-  mode: 'development',
+  mode: dev ? 'development' : 'production',
+  stats: 'minimal',
   entry: './index.ts',
   output: {
-    filename: 'chatscript.bundle.js',
+    filename: dev ? '[name].[contenthash].js' : '[name].js',
     path: path.resolve(__dirname, 'dist'),
+    clean: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: './index.html',
+    }),
+    new CleanWebpackPlugin(),
+    new MiniCssExtractPlugin({
+      filename: dev ? '[name].[contenthash].css' : '[name].css',
     }),
   ],
   module: {
@@ -24,7 +36,6 @@ module.exports = {
             loader: 'ts-loader',
             options: {
               configFile: path.resolve(__dirname, 'tsconfig.json'),
-              transpileOnly: true,
             },
           },
         ],
@@ -32,11 +43,19 @@ module.exports = {
       },
       {
         test: /\.s[ac]ss$/i,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
       },
       {
         test: /\.(png|jpe?g|gif|svg)$/i,
-        use: ['file-loader'],
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'images',
+            },
+          },
+        ],
       },
       {
         test: /\.hbs$/,
@@ -48,10 +67,15 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.js', '.json'],
   },
+  optimization: {
+    minimize: !dev,
+    minimizer: [new CssMinimizerPlugin(), new TerserPlugin()],
+  },
   devtool: 'source-map',
   devServer: {
     compress: true,
     port: 3000,
     historyApiFallback: true,
+    hot: true,
   },
 }

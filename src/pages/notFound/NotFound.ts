@@ -7,7 +7,7 @@ interface PageProps {
   link: any
 }
 
-export default class NotFound extends Block<PageProps> {
+export default class NotFound extends Block {
   constructor(props: PageProps) {
     super('div', props)
   }
