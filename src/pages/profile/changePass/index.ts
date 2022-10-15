@@ -4,6 +4,7 @@ import Input from '../../../components/input/Input'
 import Button from '../../../components/button/Button'
 import { validateInput } from '../../../utils/validate'
 import UserController from '../../../controllers/UserController'
+import { formatFormData } from '../../../utils/helpers'
 import Link from '../../../components/link/Link'
 
 const changePass = new ChangePass({
@@ -37,10 +38,9 @@ const changePass = new ChangePass({
       },
       submit: (e: Event) => {
         e.preventDefault()
-        const formData = new FormData(e.target)
-        const queryData = {}
-        formData.forEach((value, key) => (queryData[key] = value))
-        UserController.updatePassword(queryData)
+        const form = e.target as HTMLFormElement
+        const formData = new FormData(form)
+        UserController.updatePassword(formatFormData(formData))
       },
     },
   }),

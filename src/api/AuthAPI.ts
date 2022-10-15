@@ -1,25 +1,31 @@
 import HTTPTransport from '../modules/HTTPTransport'
-import { LoginFormModel, RegisterFormModel } from '../types/FormModel'
+import { FormModel } from '../types/FormModel'
 
 class AuthAPI {
-  public getUser<Response>(): Promise<Response> {
-    return HTTPTransport.get('/auth/user')
+  private _xhr: HTTPTransport
+
+  constructor() {
+    this._xhr = new HTTPTransport()
   }
 
-  public request<Response>(user: LoginFormModel): Promise<Response> {
-    return HTTPTransport.post('/auth/signin', {
+  public getUser<Response>(): Promise<Response> {
+    return this._xhr.get('/auth/user')
+  }
+
+  public request<Response>(user: FormModel): Promise<Response> {
+    return this._xhr.post('/auth/signin', {
       data: user,
     })
   }
 
-  public create<Response>(user: RegisterFormModel): Promise<Response> {
-    return HTTPTransport.post('/auth/signup', {
+  public create<Response>(user: FormModel): Promise<Response> {
+    return this._xhr.post('/auth/signup', {
       data: user,
     })
   }
 
   public delete<Response>(): Promise<Response> {
-    return HTTPTransport.post('/auth/logout')
+    return this._xhr.post('/auth/logout')
   }
 }
 

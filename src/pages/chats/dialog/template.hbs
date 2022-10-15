@@ -1,27 +1,27 @@
-<div id="{{id}}" class='dialog dialog_active'>
-  <header class='dialog__header'>
-    <div class='dialog__title'>
+<div id="{{id}}" class='dialog dialog-active'>
+  <header class='dialog-header'>
+    <div class='dialog-title'>
       <h2 class="title">{{title}}</h2>
     </div>
-    <div class='dialog__menu'>
+    <div class='dialog-menu'>
       {{#each menu}}
         {{{this}}}
       {{/each}}
     </div>
   </header>
-  <main class='dialog__main'>
-    <span class='dialog__date'>{{date}}</span>
-    <div class='dialog__messages'>
+  <main class='dialog-main'>
+    <span class='dialog-date'>{{date}}</span>
+    <div class='dialog-messages'>
       {{#each messages}}
-        <div class='message message_{{class}}'><p
-            class='message__text'
+        <div class='message message-{{class}}'><p
+            class='message-text'
           >{{content}}</p><time
-            class='message__time'
+            class='message-time'
           >{{time}}</time></div>
       {{/each}}
     </div>
   </main>
-  <footer class='dialog__footer'>
+  <footer class='dialog-footer'>
     {{{form}}}
   </footer>
 </div>

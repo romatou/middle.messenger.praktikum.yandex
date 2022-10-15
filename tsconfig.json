@@ -1,19 +1,24 @@
 {
+  "ts-node": { "files": true },
   "compilerOptions": {
+    "target": "es6",
     "outDir": "dist",
-    "target": "es2018",
     "lib": ["es2018", "dom"],
     "declaration": false,
     "module": "commonjs",
-    "strictNullChecks": true,
     "sourceMap": true,
     "baseUrl": "./src",
+    "allowSyntheticDefaultImports": true,
+    "removeComments": true,
+    "skipLibCheck": true,
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "sourceMap": true,
     "strictNullChecks": true,
-    "strict": true
+    "strict": true,
+    "esModuleInterop": true
   },
-  "exclude": ["dist", "node_modules"]
+  "exclude": ["dist", "node_modules", "./node_modules", "./node_modules/*"],
+  "include": ["./**/*.ts"]
 }

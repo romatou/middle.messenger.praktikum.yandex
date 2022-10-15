@@ -6,15 +6,15 @@ interface AvatarProps {
   name?: string
 }
 
-export default class Avatar extends Block<AvatarProps> {
-  constructor (props: AvatarProps) {
+export default class Avatar extends Block {
+  constructor(props: AvatarProps) {
     super('div', props)
   }
 
-  render () {
+  render() {
     return this.compile(template, {
       image: this.props.image,
-      name: this.props.name
+      name: this.props.name,
     })
   }
 }

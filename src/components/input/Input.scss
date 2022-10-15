@@ -3,7 +3,7 @@
 .label {
   font-weight: bold;
   display: block;
-  color: $textColorLight;
+  color: $text-color-light;
   margin-bottom: 0.25rem;
 }
 
@@ -11,16 +11,16 @@
   appearance: none;
   display: block;
   width: 100%;
-  color: $textColorDark;
-  border: 1px solid $borderLight;
+  color: $text-color-dark;
+  border: 1px solid $border-light;
   line-height: 1.25;
-  background-color: $bgColorLight;
+  background-color: $bg-color-light;
   padding: 0.65rem 0.75rem;
   border-radius: 0.25rem;
   box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
   width: 100%;
-  background: $bgColorLight;
-  border: 1px solid $borderLight;
+  background: $bg-color-light;
+  border: 1px solid $border-light;
   padding: 0 8px;
   height: 2rem;
   border-radius: 8px;
@@ -29,12 +29,12 @@
   margin-bottom: 1rem;
 
   &::placeholder {
-    color: $textColorGrey;
+    color: $text-color-grey;
   }
 
   &:focus {
     outline: none;
-    border: 1px solid $borderLight;
+    border: 1px solid $border-light;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
     background-clip: padding-box;
   }
@@ -42,7 +42,7 @@
 
 .tooltip {
   padding: 5px;
-  color: $bgColorLight;
+  color: $bg-color-light;
   font-size: 12px;
   position: absolute;
   margin: auto;

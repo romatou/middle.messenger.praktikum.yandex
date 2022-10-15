@@ -3,18 +3,18 @@
 .page-not-found {
   .page__title {
     font-size: 120px;
-    color: $textColorGrey;
+    color: $text-color-grey;
     margin: 0 0 1rem;
   }
 
   .page__subtitle {
-    color: $textColorGrey;
+    color: $text-color-grey;
     font-weight: 300;
     font-size: 20px;
   }
 
   .page__link {
-    color: $linkColor;
+    color: $link-color;
     text-decoration: none;
   }
 }

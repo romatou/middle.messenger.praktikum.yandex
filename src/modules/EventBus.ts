@@ -1,11 +1,7 @@
-interface EventBus {
-  listeners: { [event: string]: Array<(...args: string[]) => void> }
-}
+type EventBusListener = (...args: string[]) => void
 
-export default class EventBus {
-  constructor() {
-    this.listeners = {}
-  }
+class EventBus {
+  private listeners: Record<string, EventBusListener[]> = {}
 
   public on(event: string, callback: (...args: string[]) => void): void {
     if (!this.listeners[event]) {
@@ -21,7 +17,7 @@ export default class EventBus {
     }
 
     this.listeners[event] = this.listeners[event].filter(
-      listener => listener !== callback
+      (listener: EventBusListener) => listener !== callback
     )
   }
 
@@ -30,8 +26,10 @@ export default class EventBus {
       throw new Error(`Нет события: ${event}`)
     }
 
-    this.listeners[event].forEach(function (listener) {
+    this.listeners[event].forEach(function(listener: EventBusListener) {
       listener(...args)
     })
   }
 }
+
+export default EventBus

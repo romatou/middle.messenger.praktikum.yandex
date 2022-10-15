@@ -1,7 +1,7 @@
 import EventBus from './EventBus'
 import { v4 as uuid } from 'uuid'
 
-abstract class Block<Props> {
+abstract class Block {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -9,15 +9,15 @@ abstract class Block<Props> {
     FLOW_RENDER: 'flow:render',
   }
 
-  private _element: HTMLElement | null = null
-  public eventBus = EventBus
-  private readonly _meta: Record<string, Props>
+  private _element: Element | null = null
+  public eventBus: any
+  private readonly _meta: Record<string, any>
   private readonly _id: string
-  public children: Props
+  public children: any
   public withInternalID = false
-  protected props: Record<string, string | object>
+  public props: any
 
-  constructor(tagName = 'div', propsAndChildren: Props) {
+  constructor(tagName = 'div', propsAndChildren?: any) {
     const { children, props } = this._getChildren(propsAndChildren)
     this.children = children
 
@@ -38,9 +38,9 @@ abstract class Block<Props> {
     eventBus.emit(Block.EVENTS.INIT)
   }
 
-  private _getChildren(propsAndChildren: Record<string, Props | string>) {
-    const children = {}
-    const props = {}
+  private _getChildren(propsAndChildren: any) {
+    const children: any = {}
+    const props: any = {}
 
     Object.entries(propsAndChildren).forEach(([key, value]) => {
       if (value instanceof Block) {
@@ -58,7 +58,7 @@ abstract class Block<Props> {
     return { children, props }
   }
 
-  private _registerEvents(eventBus): void {
+  private _registerEvents(eventBus: EventBus): void {
     eventBus.on(Block.EVENTS.INIT, this.init.bind(this))
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this))
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this))
@@ -75,11 +75,12 @@ abstract class Block<Props> {
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER)
   }
 
+  public get element() {
+    return this._element
+  }
+
   private _componentDidMount(): boolean {
     return this.componentDidMount()
-    Object.values(this.children).forEach(child => {
-      child.dispatchComponentDidMount()
-    })
   }
 
   public componentDidMount(): boolean {
@@ -90,7 +91,7 @@ abstract class Block<Props> {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM)
   }
 
-  private _componentDidUpdate(oldProps: Props, newProps: Props): void {
+  private _componentDidUpdate(): void {
     this._render()
   }
 
@@ -98,7 +99,7 @@ abstract class Block<Props> {
     const { events = {} } = this.props
 
     Object.keys(events).forEach(eventName => {
-      this._element.addEventListener(eventName, events[eventName])
+      this._element?.addEventListener(eventName, events[eventName])
     })
   }
 
@@ -106,11 +107,11 @@ abstract class Block<Props> {
     const { events = {} } = this.props
 
     Object.keys(events).forEach(eventName => {
-      this._element.removeEventListener(eventName, events[eventName])
+      this._element?.removeEventListener(eventName, events[eventName])
     })
   }
 
-  public setProps = (nextProps: Props): null | undefined => {
+  public setProps = (nextProps: any): null | undefined => {
     if (!nextProps) {
       return
     }
@@ -118,27 +119,27 @@ abstract class Block<Props> {
     Object.assign(this.props, nextProps)
   }
 
-  get element(): HTMLElement | null {
-    return this._element
-  }
-
-  private _render(): any {
-    const block: HTMLElement = this.render()
+  private _render(): void {
+    const block: any = this.render()
     this.removeEvents()
-    this._element.innerHTML = ''
+
+    if (this._element !== null) {
+      this._element.innerHTML = ''
+    }
 
     this._element?.append(block)
-
     this.addEvents()
   }
 
-  protected render()
-
-  protected getContent(): HTMLElement | null {
-    return this.element
+  public render() {
+    throw Error('Добавьте метод render()')
   }
 
-  private _makePropsProxy(props: Props) {
+  public getContent() {
+    return this._element
+  }
+
+  private _makePropsProxy(props: any) {
     const self = this
 
     return new Proxy(props as unknown as object, {
@@ -169,8 +170,8 @@ abstract class Block<Props> {
   }
 
   compile(template: any, props: any): DocumentFragment {
-    const propsAndStubs = { ...props }
-    Object.entries(this.children).forEach(([key, child]) => {
+    const propsAndStubs: Record<any, any> = { ...props }
+    Object.entries(this.children).forEach(([key, child]: any) => {
       if (Array.isArray(child)) {
         propsAndStubs[key] = []
         for (let i = 0; i < child.length; i++) {
@@ -184,7 +185,7 @@ abstract class Block<Props> {
     const fragment: any = this._createDocumentElement('template')
 
     fragment.innerHTML = template(propsAndStubs)
-    Object.values(this.children).forEach((child: HTMLElement) => {
+    Object.values(this.children).forEach((child: any) => {
       if (Array.isArray(child)) {
         for (let i = 0; i < child.length; i++) {
           const stub: HTMLElement = fragment.content.querySelector(

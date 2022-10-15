@@ -1,33 +1,18 @@
 import REGEXP from '../consts/REGEXP'
 
 const validateInput = (e: Event): void => {
-  const item: any = e.target
-  const expression: any = REGEXP[item.name].expression
-  const check: any = expression.test(item.value)
-  const parent: HTMLElement = item.parentElement
-  const input: HTMLInputElement = parent.querySelector('input')
-  const inputCount: number = parent.childElementCount
+  const item = e.target as HTMLInputElement
+  const expression = REGEXP[item.name].expression
+  const isValid = expression.test(item.value)
+  const parent: HTMLElement | null = item.parentElement
+  const message = REGEXP[item.name].message
 
-  if (input.name === item.name) {
-    if (!check) {
-      item.classList.add('input_error')
-      if (inputCount && inputCount < 3) {
-        parent.append(addTooltip(REGEXP[item.name].message))
-      }
-    } else {
-      item.classList.remove('input_error')
-      if (inputCount && inputCount >= 3) {
-        parent.lastChild.remove()
-      }
-    }
-    if (e.type === 'blur' && item.value.length === 0) {
-      setTimeout(() => {
-        item.classList.remove('input_error')
-      }, 200)
-      if (inputCount && inputCount >= 3) {
-        parent.lastChild.remove()
-      }
-    }
+  if (!isValid) {
+    item.classList.add('input_error')
+    parent?.append(addTooltip(message))
+  } else {
+    item.classList.remove('input_error')
+    parent?.querySelector('.tooltip')?.remove()
   }
 }
 
@@ -49,11 +34,10 @@ const validateSubmit = (data: Record<string, string>): boolean => {
         })
       }
     }
-
-    return isValid
   } catch ({ field }) {
     alert(`В поле ${field} данные указаны некорректно`)
   }
+  return isValid
 }
 
 const addTooltip = (message: string): HTMLElement => {

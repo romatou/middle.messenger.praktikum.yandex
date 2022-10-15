@@ -2,11 +2,11 @@ import Block from '../../../modules/Block'
 import template from './template.hbs'
 
 interface IChangeAvatar {
-  form: HTMLFormElement
-  button: HTMLButtonElement
+  form: any
+  link: any
 }
 
-export default class ChangeAvatar extends Block<IChangeAvatar> {
+export default class ChangeAvatar extends Block {
   constructor(props: IChangeAvatar) {
     super('section', props)
   }

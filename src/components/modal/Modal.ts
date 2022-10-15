@@ -1,15 +1,15 @@
 import Block from '../../modules/Block'
 import template from './template.hbs'
 import './Modal.scss'
-import Icon, { IIcon } from '../../components/icon/Icon'
-import closeIcon from '../../../static/icons/close.png'
+import Icon from '../../components/icon/Icon'
+import closeIcon from '../../assets/icons/close.png'
 
-interface IModal {
+export interface IModal {
   content: any
-  icon: IIcon
+  icon?: Record<string, any>
 }
 
-export default class Modal extends Block<IModal> {
+export default class Modal extends Block {
   constructor(props: IModal) {
     super('div', {
       ...props,

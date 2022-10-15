@@ -4,8 +4,8 @@ import Link from '../../components/link/Link'
 import Form from '../../components/form/Form'
 import Input from '../../components/input/Input'
 import AuthController from '../../controllers/AuthController'
+import { formatFormData } from '../../utils/helpers'
 import { validateInput } from '../../utils/validate'
-
 import './style.scss'
 
 const login = new Login({
@@ -34,10 +34,9 @@ const login = new Login({
       },
       submit: (e: Event) => {
         e.preventDefault()
-        const formData = new FormData(e.target)
-        const queryData = {}
-        formData.forEach((value, key) => (queryData[key] = value))
-        AuthController.request(queryData)
+        const form = e.target as HTMLFormElement
+        const formData = new FormData(form)
+        AuthController.request(formatFormData(formData))
       },
     },
     button: new Button({

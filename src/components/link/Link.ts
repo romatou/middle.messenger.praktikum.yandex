@@ -1,7 +1,6 @@
 import Block from '../../modules/Block'
 import template from './link.hbs'
 import Router from '../../modules/Router'
-import './Link.css'
 
 export interface ILink {
   text: string
@@ -12,14 +11,13 @@ export interface ILink {
   }
 }
 
-export default class Link extends Block<ILink> {
+export default class Link extends Block {
   constructor(props: ILink) {
     super('div', {
       text: props.text,
       to: props.to,
       events: {
         click: () => {
-          Router.use(props.to, props.page)
           Router.go(props.to)
         },
       },

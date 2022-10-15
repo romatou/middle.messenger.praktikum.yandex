@@ -1,9 +1,8 @@
-import Block from '../modules/Block'
 import isEqual from '../utils/isEqual'
 import store, { StoreEvents } from '../modules/Store'
 
-export default function connect(mapStateToProps: (state: Indexed) => Indexed) {
-  return function(Component: typeof Block) {
+function connect(mapStateToProps: (state: any) => any) {
+  return function(Component: any) {
     return class extends Component {
       constructor(props: any) {
         let state = mapStateToProps(store.getState())
@@ -23,3 +22,5 @@ export default function connect(mapStateToProps: (state: Indexed) => Indexed) {
     }
   }
 }
+
+export default connect

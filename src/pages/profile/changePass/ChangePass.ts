@@ -1,12 +1,14 @@
 import Block from '../../../modules/Block'
 import template from './template.hbs'
+import Form from '../../../components/form/Form'
+import Link from '../../../components/link/Link'
 
 interface IChangePass {
-  form: HTMLFormElement
-  button: HTMLButtonElement
+  link: Link
+  form: Form
 }
 
-export default class ChangePass extends Block<IChangePass> {
+export default class ChangePass extends Block {
   constructor(props: IChangePass) {
     super('section', props)
   }

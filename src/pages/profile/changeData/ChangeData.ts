@@ -3,17 +3,19 @@ import template from './template.hbs'
 import IForm from '../../../components/form/Form'
 import connect from '../../../modules/connect'
 import store, { StoreEvents } from '../../../modules/Store'
+import Link from '../../../components/link/Link'
 
 interface IChangeData {
   form: IForm
+  link: Link
 }
 
-class ChangeData extends Block<IChangeData> {
+class ChangeData extends Block {
   constructor(props: IChangeData) {
     super('section', props)
 
     store.on(StoreEvents.Updated, () => {
-      props.form.children.fields.forEach(el => {
+      props.form.children.fields.forEach((el: any) => {
         if (el.props.name === 'login') {
           el.setProps({
             value: store.getState().user.login,

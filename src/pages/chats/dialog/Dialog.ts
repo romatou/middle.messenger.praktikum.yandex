@@ -1,24 +1,24 @@
 import Block from '../../../modules/Block'
+import Form from '../../../components/form/Form'
 import template from './template.hbs'
 import './Dialog.scss'
 import ChatController from '../../../controllers/ChatController'
-import { IIcon } from '../../../components/icon/Icon'
 import store, { StoreEvents } from '../../../modules/Store'
 import connect from '../../../modules/connect'
+import { ChatMenu } from '../../../types/Types'
 
-interface DialogProps {
-  title: string
+export interface DialogProps {
   id: number
-  menu: IIcon
-  avatar: object
-  messages: object
-  form: object
-  events: {
+  title: string
+  menu: ChatMenu
+  messages?: HTMLElement
+  form: Form
+  events?: {
     submit?: (e: Event) => void
   }
 }
 
-class Dialog extends Block<DialogProps> {
+class Dialog extends Block {
   constructor(props: DialogProps) {
     super('section', props)
     ChatController.connectToChat(props.id)
@@ -32,16 +32,14 @@ class Dialog extends Block<DialogProps> {
     const { events = {} } = this.props
 
     Object.keys(events).forEach(eventName => {
-      this._element.addEventListener(eventName, events[eventName])
+      this.element?.addEventListener(eventName, events[eventName])
     })
 
     const dialogWindow = document.querySelector('.dialog__main')
     const messages = document.querySelector('.dialog__messages')
 
     if (dialogWindow) {
-      //console.log(dialogWindow.scrollTo(0, dialogWindow.scrollHeight))
-
-      dialogWindow.scroll(0, messages?.scrollHeight)
+      dialogWindow.scroll(0, (messages as HTMLElement).scrollHeight)
     }
   }
 

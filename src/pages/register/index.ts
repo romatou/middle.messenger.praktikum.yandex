@@ -3,8 +3,9 @@ import Form from '../../components/form/Form'
 import Button from '../../components/button/Button'
 import Input from '../../components/input/Input'
 import Link from '../../components/link/Link'
-import { validateInput, validateSubmit } from '../../utils/validate'
+import { validateInput } from '../../utils/validate'
 import AuthController from '../../controllers/AuthController'
+import { formatFormData } from '../../utils/helpers'
 
 const register = new Register({
   title: 'Войти',
@@ -54,12 +55,11 @@ const register = new Register({
       blur: e => {
         validateInput(e)
       },
-      submit: (e: Event) => {
+      submit: async (e: Event) => {
         e.preventDefault()
-        const formData = new FormData(e.target)
-        const queryData = {}
-        formData.forEach((value, key) => (queryData[key] = value))
-        AuthController.create(queryData)
+        const form = e.target as HTMLFormElement
+        const formData = new FormData(form)
+        AuthController.create(formatFormData(formData))
       },
     },
     button: new Button({

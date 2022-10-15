@@ -1,21 +1,26 @@
 import Block from '../../modules/Block'
+import Link from '../../components/link/Link'
+import Avatar from '../../components/avatar/Avatar'
+import Button from '../../components/button/Button'
 import template from './template.hbs'
 import connect from '../../modules/connect'
 import AuthController from '../../controllers/AuthController'
 import store, { StoreEvents } from '../../modules/Store'
 
 interface IUser {
-  logout: unknown
-  link: unknown
-  changeData: any
-  avatar: any
-  form: object
-  events: {
-    submit?: (e: any) => void
+  logout: Button
+  link: Link
+  dataChange: Link
+  passChange: Link
+  avatarChange: Link
+  avatar: Avatar
+  button: Button
+  events?: {
+    submit: (e: Event) => void
   }
 }
 
-class Profile extends Block<IUser> {
+class Profile extends Block {
   constructor(props: IUser) {
     super('section', props)
     AuthController.getUser()
@@ -42,4 +47,4 @@ class Profile extends Block<IUser> {
 
 const withProfile = connect(state => ({ user: state.user }))
 
-export default Profile
+export default withProfile(Profile)

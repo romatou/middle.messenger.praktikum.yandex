@@ -8,7 +8,7 @@ interface PageProps {
   className: string
 }
 
-export default class ServerError extends Block<PageProps> {
+export default class ServerError extends Block {
   constructor(props: PageProps) {
     super('section', props)
   }
