@@ -1,7 +1,5 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/55a263f4-bfea-4b71-83f0-d422089db859/deploy-status)](https://app.netlify.com/sites/charming-marshmallow-76f3f5/deploys)
 
-[![Heroku](https://heroku-badge.herokuapp.com/?app=heroku-badge)]
-
 ## Описание
 
 Проект веб-мессенджера курса Яндекс.Практикум - Мидл Фронтенд Разработчик 2022.
